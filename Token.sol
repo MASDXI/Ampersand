@@ -11,27 +11,46 @@ import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contr
 contract _token is ERC20 {
     
     uint8 private currentDecimals;
+    enum TOKEN_TYPE {CAPPED,UNCAPPED}
+    TOKEN_TYPE public tokenType;
     
     /** 
      * @param _name name
      * @param _symbol symbol
      * @param _decimals decimals
      * @param _initialSupply totalSupply
+     * @param _tokenType type of token
      * @dev to create token require following parameters
     */
     constructor(
         string memory _name, 
         string memory _symbol,
         uint8 _decimals,
-        uint256 _initialSupply
+        uint256 _initialSupply,
+        TOKEN_TYPE _tokenType
     ) ERC20(_name, _symbol) {
         currentDecimals = _decimals;
+        tokenType = _tokenType;
         // mint token to the address of the account that sent the transaction.
         _mint(tx.origin, _initialSupply * (10**uint256(_decimals)));
+    }
+
+    modifier unCapped {
+      require(tokenType == _token.TOKEN_TYPE.UNCAPPED);
+      _;
     }
 
     function decimals() public view virtual override returns (uint8) {
         return currentDecimals;
     }
 
+    function mint(address _address,uint256 _amount) public unCapped returns (bool) {
+        _mint(_address,_amount);
+        return true;
+    }
+
+    function burn(address _address,uint256 _amount) public unCapped returns (bool) {
+        _burn(_address,_amount);
+        return true;
+    }
 }
