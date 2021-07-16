@@ -13,6 +13,7 @@ contract Factory {
      * @param _symbol symbol
      * @param _decimals decimals
      * @param _totalSupply totalSupply
+     * @param _tokenType type of token
      * @dev to create token require following parameters
      * @return address after token created successful
     */
