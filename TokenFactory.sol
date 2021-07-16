@@ -20,9 +20,10 @@ contract Factory {
         string memory _name, 
         string memory _symbol, 
         uint8 _decimals,
-        uint256 _totalSupply
+        uint256 _totalSupply,
+        _token.TOKEN_TYPE _tokenType
     ) public returns (address) {
-        _token Token = new _token(_name, _symbol, _decimals, _totalSupply);
+        _token Token = new _token(_name, _symbol, _decimals, _totalSupply,  _tokenType);
         emit TokenCreated(address(Token));
         tokenAddress.push(address(Token));
         return address(Token);
