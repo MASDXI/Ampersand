@@ -4,7 +4,8 @@ Token to prevent
 ```
  Contract creation initialization returns data with length of more than 24576 bytes. The deployment will likely fails.
 ```
-to solving the problem enable `--optimize` and `--optimize-runs n` in `solcjs` it can produce smaller and more gas-efficient EVM bytecode
+to solving the problem enable `--optimize` and `--optimize-runs n` in `solcjs` it can produce smaller and more gas-efficient EVM bytecode.
+If developing on REMIX IDE Enable optimization
 
 ### Todo
 
