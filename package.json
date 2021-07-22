@@ -1,0 +1,26 @@
+{
+  "name": "TokenFactory",
+  "version": "1.0.0",
+  "description": "Token Factory contract for create token with low gas cost deployment, by clone contract functionality/logic",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "echo \"Error: no compile sepcified\" && exit 1",
+    "build": "echo \"Error: no build sepcified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MASDXI/TokenFactory.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MASDXI/TokenFactory/issues"
+  },
+  "homepage": "https://github.com/MASDXI/TokenFactory#readme",
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.2.0",
+    "solc": "^0.8.6"
+  }
+}
