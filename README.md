@@ -3,8 +3,9 @@ Token Factory contract for create token with low gas cost deployment, by clone c
 
 ### Todo
 
-- [ ] Support multiple types of token  
-  - [ ] support ERC721
+- [ ] Support multiple types of token 
+  - [X] support ERC20
+  - [X] support ERC721
   - [ ] support ERC777
   - [ ] support ERC1155
 - [ ] Additonal Feature  
@@ -15,15 +16,6 @@ Token Factory contract for create token with low gas cost deployment, by clone c
   - [ ] Unfreeze  
   - [ ] Transfer Ownership  
   - [ ] Upgrade  
-
-### In Progress
-
-- [ ] something
-
-### Done
-
-- [x] Create Factory contract  
-- [x] Support ERC20 token  
 
 ### disclaimer 
 - this smart contract not implementing Ownable yet.  
