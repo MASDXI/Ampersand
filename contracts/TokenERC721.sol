@@ -2,56 +2,29 @@
 pragma solidity >=0.8.0 <0.9.0;
 
 // import callback node_modules
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin-contracts/blob/master/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "@openzeppelin/contracts/access/utils/Counters.sol";
 
 // import callback url
-// import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/ERC20.sol";
-// import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol";
+//import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+//import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/Counters.sol";
 
-contract _token is ERC20 {
-    
-    uint8 private currentDecimals;
-    enum TOKEN_TYPE {CAPPED,UNCAPPED}
-    TOKEN_TYPE public tokenType;
-    
-    /** 
-     * @param _name name
-     * @param _symbol symbol
-     * @param _decimals decimals
-     * @param _initialSupply totalSupply
-     * @param _tokenType type of token
-     * @dev to create token require following parameters
-    */
+contract _ERC721 is ERC721URIStorage  {
+    using Counters for Counters.Counter;
+    Counters.Counter private _tokenIds;
+
     constructor(
-        string memory _name, 
-        string memory _symbol,
-        uint8 _decimals,
-        uint256 _initialSupply,
-        TOKEN_TYPE _tokenType
-    ) ERC20(_name, _symbol) {
-        currentDecimals = _decimals;
-        tokenType = _tokenType;
-        // mint token to the address of the account that sent the transaction.
-        _mint(tx.origin, _initialSupply * (10**uint256(_decimals)));
+        string memory _name,
+        string memory _symbol)
+        ERC721(_name, _symbol) {
     }
 
-    modifier unCapped {
-      require(tokenType == _token.TOKEN_TYPE.UNCAPPED);
-      _;
+    function mint(address _address, string memory _tokenURI) public returns (uint256) {
+        _tokenIds.increment();
+        uint256 newTokenId = _tokenIds.current();
+        _safeMint(_address, newItemId);
+        _setTokenURI(newTokenId, _tokenURI);
+        return newTokenId;
     }
 
-    function decimals() public view virtual override returns (uint8) {
-        return currentDecimals;
-    }
-
-    function mint(address _address,uint256 _amount) public unCapped returns (bool) {
-        _mint(_address,_amount);
-        return true;
-    }
-
-    function burn(address _address,uint256 _amount) public unCapped returns (bool) {
-        _burn(_address,_amount);
-        return true;
-    }
 }

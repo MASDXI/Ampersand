@@ -3,8 +3,8 @@ pragma solidity >=0.8.0 <0.9.0;
 
 import "./TokenERC20.sol";
 import "./TokenERC721.sol";
-import "./TokenERC777.sol";
-import "./TokenERC1155.sol";
+// import "./TokenERC777.sol";
+// import "./TokenERC1155.sol";
 
 contract TokenFactory {
     
@@ -14,10 +14,10 @@ contract TokenFactory {
     address[] private erc721Address;
     address[] private erc777Address;
     address[] private erc1155Address;
-    uint8 constant ERC20 = 0;
-    uint8 constant ERC721 = 1;
-    uint8 constant ERC777 = 2;
-    uint8 constant ERC1155 = 3;
+    uint8 constant ERC_20 = 0;
+    uint8 constant ERC_721 = 1;
+    uint8 constant ERC_777 = 2;
+    uint8 constant ERC_1155 = 3;
 
     /** 
      * @param _name name
@@ -41,19 +41,19 @@ contract TokenFactory {
             _decimals, 
             _totalSupply, 
             _tokenType);
-        erc20address.push(address(token));
+        erc20Address.push(address(token));
         emit TokenCreated(address(token));
-        return (address(Token),erc20Address.length);
+        return (address(token),erc20Address.length);
     }
 
     /** 
      * @dev to create token with ERC721 standard require following parameters
      * @return address after token created successful
     */
-    function createERC721() public returns (address, uint256) {
+    function createERC721(string memory _name, string memory _symbol) public returns (address, uint256) {
         // TODO: define params
-        _token token = new _token();
-        erc777address.push(address(token));
+        _token token = new _token(_name, _symbol);
+        erc777Address.push(address(token));
         emit TokenCreated(address(token));
         return (address(token),erc777Address.length-1);
     }
@@ -65,7 +65,7 @@ contract TokenFactory {
     function createERC777() public returns (address, uint256) {
         // TODO: define params
         _token token = new _token();
-        erc777address.push(address(token));
+        erc777Address.push(address(token));
         emit TokenCreated(address(token));
         return (address(token),erc777Address.length-1);
     }
@@ -77,7 +77,7 @@ contract TokenFactory {
     function createERC1155() public returns (address, uint256) {
         // TODO: define params
         _token token = new _token();
-        erc1155address.push(address(token));
+        erc1155Address.push(address(token));
         emit TokenCreated(address(token));
         return (address(token),erc1155Address.length-1);
     }
@@ -86,40 +86,40 @@ contract TokenFactory {
     // call function for retrieve `address` by `index`
 
     function getTokenAddress(uint256 _index, uint256 _tokenType) public view returns (address){
-        if ( _tokenType = 0) {
+        if ( _tokenType == 0) {
             return erc20Address[_index];
         }
 
-        if ( _tokenType = 1) {
+        if ( _tokenType == 1) {
             return erc20Address[_index];
         }
 
-        if ( _tokenType = 2) {
+        if ( _tokenType == 2) {
             return erc20Address[_index];
         }
 
-        if ( _tokenType = 3) {
+        if ( _tokenType == 3) {
             return erc20Address[_index];
         }
     }
     
     // call function for retrieve `array.length` by `tokentype`
 
-    function getTokenAddress(uint256 _tokenType) public view returns (address){
-        if ( _tokenType = 0) {
-            return erc20Address[_index];
+    function getTokenLength(uint256 _tokenType) public view returns (uint256){
+        if ( _tokenType == 0) {
+            return erc20Address.length;
         }
 
-        if ( _tokenType = 1) {
-            return erc721Address[_index];
+        if ( _tokenType == 1) {
+            return erc721Address.length;
         }
 
-        if ( _tokenType = 2) {
-            return erc777Address[_index];
+        if ( _tokenType == 2) {
+            return erc777Address.length;
         }
 
-        if ( _tokenType = 3) {
-            return erc1155Address[_index];
+        if ( _tokenType == 3) {
+            return erc1155Address.length;
         }
     }
 }

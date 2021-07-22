@@ -9,7 +9,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 // import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/ERC20.sol";
 // import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol";
 
-contract _token is ERC20 {
+contract _ERC20 is ERC20 {
     
     uint8 private currentDecimals;
     enum TOKEN_TYPE {CAPPED,UNCAPPED}
