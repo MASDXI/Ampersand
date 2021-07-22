@@ -85,41 +85,41 @@ contract TokenFactory {
     
     // call function for retrieve `address` by `index`
 
-    function getTokenAddress(uint256 _index, uint256 _tokenType) public view returns (address){
-        if ( _tokenType == 0) {
-            return erc20Address[_index];
-        }
+    // function getTokenAddress(uint256 _index, uint256 _tokenType) public view returns (address){
+    //     if ( _tokenType == 0) {
+    //         return erc20Address[_index];
+    //     }
 
-        if ( _tokenType == 1) {
-            return erc20Address[_index];
-        }
+    //     if ( _tokenType == 1) {
+    //         return erc20Address[_index];
+    //     }
 
-        if ( _tokenType == 2) {
-            return erc20Address[_index];
-        }
+    //     if ( _tokenType == 2) {
+    //         return erc20Address[_index];
+    //     }
 
-        if ( _tokenType == 3) {
-            return erc20Address[_index];
-        }
-    }
+    //     if ( _tokenType == 3) {
+    //         return erc20Address[_index];
+    //     }
+    // }
     
     // call function for retrieve `array.length` by `tokentype`
 
-    function getTokenLength(uint256 _tokenType) public view returns (uint256){
-        if ( _tokenType == 0) {
-            return erc20Address.length;
-        }
+    // function getTokenLength(uint256 _tokenType) public view returns (uint256){
+    //     if ( _tokenType == 0) {
+    //         return erc20Address.length;
+    //     }
 
-        if ( _tokenType == 1) {
-            return erc721Address.length;
-        }
+    //     if ( _tokenType == 1) {
+    //         return erc721Address.length;
+    //     }
 
-        if ( _tokenType == 2) {
-            return erc777Address.length;
-        }
+    //     if ( _tokenType == 2) {
+    //         return erc777Address.length;
+    //     }
 
-        if ( _tokenType == 3) {
-            return erc1155Address.length;
-        }
-    }
+    //     if ( _tokenType == 3) {
+    //         return erc1155Address.length;
+    //     }
+    // }
 }
