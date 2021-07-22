@@ -1,7 +1,7 @@
 # TokenFactory
 Token Factory contract for creating token with less gas cost deployment, by clone contract functionality/logic  
 Factory contract is different from the Proxy contract that points to an already deployed contract.  
-In a proxy contract, you need 'address' of reference but the factory contract doesn't need it at all.  
+In a proxy contract, you need 'address' for reference but the factory contract doesn't need it at all.  
 ### Prerequisite
 - [nodejs](https://nodejs.org/en/)
 - [nvm](https://github.com/nvm-sh/nvm)
