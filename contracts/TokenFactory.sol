@@ -6,13 +6,13 @@ import "./TokenERC721.sol";
 import "./TokenERC777.sol";
 import "./TokenERC1155.sol";
 
-contract Factory {
+contract TokenFactory {
     
     event TokenCreated(address indexed tokenAddress);
-    address[] private erc20address;
-    address[] private erc721address;
-    address[] private erc777address;
-    address[] private erc1155address;
+    address[] private erc20Address;
+    address[] private erc721Address;
+    address[] private erc777Address;
+    address[] private erc1155Address;
 
     /** 
      * @param _name name
@@ -30,14 +30,15 @@ contract Factory {
         uint256 _totalSupply,
         _token.TOKEN_TYPE _tokenType
     ) public returns (address, uint256) {
-        _token Token = new _token(_name, 
+        // TODO: adding `_privacyType` type enum for intregrating privacy feature.
+        _token token = new _token(_name, 
             _symbol, 
             _decimals, 
             _totalSupply, 
             _tokenType);
-        erc20address.push(address(Token));
-        emit TokenCreated(address(Token));
-        return (address(Token),erc20address.length);
+        erc20address.push(address(token));
+        emit TokenCreated(address(token));
+        return (address(Token),erc20Address.length);
     }
 
     /** 
@@ -45,10 +46,10 @@ contract Factory {
      * @return address after token created successful
     */
     function createERC721() public returns (address, uint256) {
-        _token Token = new _token();
-        erc777address.push(address(Token));
-        emit TokenCreated(address(Token));
-        return (address(Token),erc777address.length);
+        _token token = new _token();
+        erc777address.push(address(token));
+        emit TokenCreated(address(token));
+        return (address(token),erc777Address.length);
     }
 
     /** 
@@ -56,10 +57,10 @@ contract Factory {
      * @return address after token created successful
     */
     function createERC777() public returns (address, uint256) {
-        _token Token = new _token();
-        erc777address.push(address(Token));
-        emit TokenCreated(address(Token));
-        return (address(Token),erc777address.length);
+        _token token = new _token();
+        erc777address.push(address(token));
+        emit TokenCreated(address(token));
+        return (address(token),erc777Address.length);
     }
 
     /** 
@@ -67,10 +68,10 @@ contract Factory {
      * @return address after token created successful
     */
     function createERC1155() public returns (address, uint256) {
-        _token Token = new _token();
-        erc1155address.push(address(Token));
-        emit TokenCreated(address(Token));
-        return (address(Token),erc1155address.length);
+        _token token = new _token();
+        erc1155address.push(address(token));
+        emit TokenCreated(address(token));
+        return (address(token),erc1155Address.length);
     }
 
     
