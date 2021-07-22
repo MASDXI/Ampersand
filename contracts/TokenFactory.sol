@@ -43,7 +43,7 @@ contract TokenFactory {
             _tokenType);
         erc20Address.push(address(token));
         emit TokenCreated(address(token));
-        return (address(token),erc20Address.length);
+        return (address(token),erc20Address.length-1);
     }
 
     /** 
@@ -82,7 +82,6 @@ contract TokenFactory {
         return (address(token),erc1155Address.length-1);
     }
 
-    
     // call function for retrieve `address` by `index`
 
     // function getTokenAddress(uint256 _index, uint256 _tokenType) public view returns (address){
