@@ -20,7 +20,7 @@ contract Factory {
      * @param _decimals decimals
      * @param _totalSupply totalSupply
      * @param _tokenType type of token
-     * @dev to create token require following parameters
+     * @dev to create token with ERC20 standard require following parameters
      * @return address after token created successful
     */
     function createERC20(
@@ -41,7 +41,7 @@ contract Factory {
     }
 
     /** 
-     * @dev to create token require following parameters
+     * @dev to create token with ERC721 standard require following parameters
      * @return address after token created successful
     */
     function createERC721() public returns (address, uint256) {
@@ -52,7 +52,7 @@ contract Factory {
     }
 
     /** 
-     * @dev to create token require following parameters
+     * @dev to create token with ERC777 standardrequire following parameters
      * @return address after token created successful
     */
     function createERC777() public returns (address, uint256) {
@@ -63,7 +63,7 @@ contract Factory {
     }
 
     /** 
-     * @dev to create token require following parameters
+     * @dev to create token with ERC1155 standard require following parameters
      * @return address after token created successful
     */
     function createERC1155() public returns (address, uint256) {
@@ -74,12 +74,14 @@ contract Factory {
     }
 
     
-    // helper function for retreive address easier  
-    
+    // call function for retrieve `address` by `index`
+
     // function getTokenAddress(uint256 _index) public view returns (address){
     //     return tokenAddress[_index];
     // }
     
+    // call function for retrieve `array.length`
+
     // function getLength() public view returns (uint256){
     //     return tokenAddress.length;
     // }
