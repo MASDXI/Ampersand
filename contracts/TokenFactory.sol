@@ -14,10 +14,10 @@ contract TokenFactory {
     address[] private erc721Address;
     address[] private erc777Address;
     address[] private erc1155Address;
-    uint8 constant ERC_20 = 0;
-    uint8 constant ERC_721 = 1;
-    uint8 constant ERC_777 = 2;
-    uint8 constant ERC_1155 = 3;
+    // uint8 constant ERC_20 = 0;
+    // uint8 constant ERC_721 = 1;
+    // uint8 constant ERC_777 = 2;
+    // uint8 constant ERC_1155 = 3;
 
     /** 
      * @param _name name
@@ -86,19 +86,19 @@ contract TokenFactory {
     // call function for retrieve `address` by `index`
 
     // function getTokenAddress(uint256 _index, uint256 _tokenType) public view returns (address){
-    //     if ( _tokenType == 0) {
+    //     if ( _tokenType == ERC_20) {
     //         return erc20Address[_index];
     //     }
 
-    //     if ( _tokenType == 1) {
+    //     if ( _tokenType == ERC_721) {
     //         return erc20Address[_index];
     //     }
 
-    //     if ( _tokenType == 2) {
+    //     if ( _tokenType == ERC_777) {
     //         return erc20Address[_index];
     //     }
 
-    //     if ( _tokenType == 3) {
+    //     if ( _tokenType == ERC_1155) {
     //         return erc20Address[_index];
     //     }
     // }
@@ -106,19 +106,19 @@ contract TokenFactory {
     // call function for retrieve `array.length` by `tokentype`
 
     // function getTokenLength(uint256 _tokenType) public view returns (uint256){
-    //     if ( _tokenType == 0) {
+    //     if ( _tokenType == ERC_20) {
     //         return erc20Address.length;
     //     }
 
-    //     if ( _tokenType == 1) {
+    //     if ( _tokenType == ERC_721) {
     //         return erc721Address.length;
     //     }
 
-    //     if ( _tokenType == 2) {
+    //     if ( _tokenType == ERC_777) {
     //         return erc777Address.length;
     //     }
 
-    //     if ( _tokenType == 3) {
+    //     if ( _tokenType == ERC_1155) {
     //         return erc1155Address.length;
     //     }
     // }
