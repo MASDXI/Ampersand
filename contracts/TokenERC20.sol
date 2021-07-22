@@ -15,14 +15,6 @@ contract _ERC20 is ERC20 {
     enum TOKEN_TYPE {CAPPED,UNCAPPED}
     TOKEN_TYPE public tokenType;
     
-    /** 
-     * @param _name name
-     * @param _symbol symbol
-     * @param _decimals decimals
-     * @param _initialSupply totalSupply
-     * @param _tokenType type of token
-     * @dev to create token require following parameters
-    */
     constructor(
         string memory _name, 
         string memory _symbol,
