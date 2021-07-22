@@ -9,10 +9,15 @@ import "./TokenERC1155.sol";
 contract TokenFactory {
     
     event TokenCreated(address indexed tokenAddress);
+
     address[] private erc20Address;
     address[] private erc721Address;
     address[] private erc777Address;
     address[] private erc1155Address;
+    uint8 constant ERC20 = 0;
+    uint8 constant ERC721 = 1;
+    uint8 constant ERC777 = 2;
+    uint8 constant ERC1155 = 3;
 
     /** 
      * @param _name name
@@ -46,10 +51,11 @@ contract TokenFactory {
      * @return address after token created successful
     */
     function createERC721() public returns (address, uint256) {
+        // TODO: define params
         _token token = new _token();
         erc777address.push(address(token));
         emit TokenCreated(address(token));
-        return (address(token),erc777Address.length);
+        return (address(token),erc777Address.length-1);
     }
 
     /** 
@@ -57,10 +63,11 @@ contract TokenFactory {
      * @return address after token created successful
     */
     function createERC777() public returns (address, uint256) {
+        // TODO: define params
         _token token = new _token();
         erc777address.push(address(token));
         emit TokenCreated(address(token));
-        return (address(token),erc777Address.length);
+        return (address(token),erc777Address.length-1);
     }
 
     /** 
@@ -68,22 +75,51 @@ contract TokenFactory {
      * @return address after token created successful
     */
     function createERC1155() public returns (address, uint256) {
+        // TODO: define params
         _token token = new _token();
         erc1155address.push(address(token));
         emit TokenCreated(address(token));
-        return (address(token),erc1155Address.length);
+        return (address(token),erc1155Address.length-1);
     }
 
     
     // call function for retrieve `address` by `index`
 
-    // function getTokenAddress(uint256 _index) public view returns (address){
-    //     return tokenAddress[_index];
-    // }
-    
-    // call function for retrieve `array.length`
+    function getTokenAddress(uint256 _index, uint256 _tokenType) public view returns (address){
+        if ( _tokenType = 0) {
+            return erc20Address[_index];
+        }
 
-    // function getLength() public view returns (uint256){
-    //     return tokenAddress.length;
-    // }
+        if ( _tokenType = 1) {
+            return erc20Address[_index];
+        }
+
+        if ( _tokenType = 2) {
+            return erc20Address[_index];
+        }
+
+        if ( _tokenType = 3) {
+            return erc20Address[_index];
+        }
+    }
+    
+    // call function for retrieve `array.length` by `tokentype`
+
+    function getTokenAddress(uint256 _tokenType) public view returns (address){
+        if ( _tokenType = 0) {
+            return erc20Address[_index];
+        }
+
+        if ( _tokenType = 1) {
+            return erc721Address[_index];
+        }
+
+        if ( _tokenType = 2) {
+            return erc777Address[_index];
+        }
+
+        if ( _tokenType = 3) {
+            return erc1155Address[_index];
+        }
+    }
 }
