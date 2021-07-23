@@ -9,20 +9,12 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 // import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/ERC20.sol";
 // import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol";
 
-contract _token is ERC20 {
+contract _ERC1155 is ERC1155 {
     
     uint8 private currentDecimals;
     enum TOKEN_TYPE {CAPPED,UNCAPPED}
     TOKEN_TYPE public tokenType;
     
-    /** 
-     * @param _name name
-     * @param _symbol symbol
-     * @param _decimals decimals
-     * @param _initialSupply totalSupply
-     * @param _tokenType type of token
-     * @dev to create token require following parameters
-    */
     constructor(
         string memory _name, 
         string memory _symbol,
