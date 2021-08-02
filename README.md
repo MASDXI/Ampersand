@@ -1,4 +1,5 @@
 TokenFactory
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ======
 
 Token Factory contract for creating token with less gas cost deployment, by clone contract functionality/logic  

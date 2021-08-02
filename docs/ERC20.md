@@ -1,7 +1,7 @@
 # ERC20 Token
 
-`constructor`
 
+`constructor`
 ``` js
      constructor(string _name, 
         string _symbol,
@@ -17,3 +17,12 @@
     // 0 = CAPPED for disable mint/burn function
     // 1 = UNCAPPED for enbale mint/burn function
 ```
+### Data-type 
+
+| VARIALBLE          | TYPE        | EXAMPLE       |
+| ------------------ | ----------- | ------------- |
+| __name_            | string      | "Basic Coin"  |
+| __symbol_          | string      | "BSC"         |
+| __decimals_        | uint8       | 18            |
+| __initialSupply_   | uint8       | 10000000      |
+| __tokenType_       | enum        | 0             |
