@@ -27,6 +27,12 @@ $ npm run test
 ```
 $ npm run build
 ```
+Documents
+======
+- [ERC20](./docs/ERC20.md)
+- [ERC721](./docs/ERC721.md)
+- [ERC1155](./docs/ERC1155.md)
+
 FAQ  
 ======
 Q: Contract creation initialization returns data with length of more than 24576 bytes. The deployment will likely fails.  

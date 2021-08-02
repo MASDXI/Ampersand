@@ -11,18 +11,18 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract _ERC1155 is ERC1155 {
     
-    struct token {
+    struct Token {
         uint256 id;
         uint amount;
         // bytes data; if needed
     }
 
     constructor(
-        token[] memory _tokens,
+        Token[] memory _tokens,
         string _uri
     ) ERC1155(_uri) {
-        for (uint i = 0; i < token.length; i++) {
-           _mint(tx.origin, token[i].id, token[i].amount, "");
+        for (uint i = 0; i < _tokens.length; i++) {
+           _mint(tx.origin, _tokens[i].id, _tokens[i].amount, "");
         }
     }
 
