@@ -9,7 +9,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 // import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/ERC20.sol";
 // import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol";
 
-contract _ERC20 is ERC20 {
+contract _ERC20 is ERC20, Ownable {
     
     uint8 private currentDecimals;
     enum TOKEN_TYPE {CAPPED,UNCAPPED}
@@ -25,6 +25,7 @@ contract _ERC20 is ERC20 {
         currentDecimals = _decimals;
         tokenType = _tokenType;
         // mint token to the address of the account that sent the transaction.
+        transferOwnership(tx.origin);
         _mint(tx.origin, _initialSupply * (10**uint256(_decimals)));
     }
 
@@ -37,12 +38,12 @@ contract _ERC20 is ERC20 {
         return currentDecimals;
     }
 
-    function mint(address _address,uint256 _amount) public unCapped returns (bool) {
+    function mint(address _address,uint256 _amount) public unCapped onlyOwner returns (bool) {
         _mint(_address,_amount);
         return true;
     }
 
-    function burn(address _address,uint256 _amount) public unCapped returns (bool) {
+    function burn(address _address,uint256 _amount) public unCapped onlyOwner returns (bool) {
         _burn(_address,_amount);
         return true;
     }

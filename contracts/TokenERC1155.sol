@@ -2,48 +2,28 @@
 pragma solidity >=0.8.0 <0.9.0;
 
 // import callback node_modules
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 // import callback url
-// import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/ERC20.sol";
+// import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC1155/ERC1155.sol";
 // import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol";
 
 contract _ERC1155 is ERC1155 {
     
-    uint8 private currentDecimals;
-    enum TOKEN_TYPE {CAPPED,UNCAPPED}
-    TOKEN_TYPE public tokenType;
-    
+    struct token {
+        uint256 id;
+        uint amount;
+        // bytes data; if needed
+    }
+
     constructor(
-        string memory _name, 
-        string memory _symbol,
-        uint8 _decimals,
-        uint256 _initialSupply,
-        TOKEN_TYPE _tokenType
-    ) ERC20(_name, _symbol) {
-        currentDecimals = _decimals;
-        tokenType = _tokenType;
-        // mint token to the address of the account that sent the transaction.
-        _mint(tx.origin, _initialSupply * (10**uint256(_decimals)));
+        token[] memory _tokens,
+        string _uri
+    ) ERC1155(_uri) {
+        for (uint i = 0; i < token.length; i++) {
+           _mint(tx.origin, token[i].id, token[i].amount, "");
+        }
     }
 
-    modifier unCapped {
-      require(tokenType == _token.TOKEN_TYPE.UNCAPPED);
-      _;
-    }
-
-    function decimals() public view virtual override returns (uint8) {
-        return currentDecimals;
-    }
-
-    function mint(address _address,uint256 _amount) public unCapped returns (bool) {
-        _mint(_address,_amount);
-        return true;
-    }
-
-    function burn(address _address,uint256 _amount) public unCapped returns (bool) {
-        _burn(_address,_amount);
-        return true;
-    }
 }

@@ -34,7 +34,7 @@ A: To solving the problem enable `--optimize` and `--optimize-runs 200` in `solc
 If developing on REMIX IDE enable solidity compiler and enable optimization before deploying it.  
 
 Q: Fail not Found or Fail import callback not supported. (VSCode)  
-A: change `import @openzeppelin` to import `../node_modules/@openzeppelin`
+A: change `import @openzeppelin/...` to `import ../node_modules/@openzeppelin/...`
 
 Q: How to deploy is project.  
 A: You can use you fav tools Hardhat, Truffle and more.  
@@ -47,8 +47,8 @@ Todo
 - [ ] Support multiple types of token 
   - [X] support ERC20
   - [X] support ERC721
-  - [ ] support ERC777
-  - [ ] support ERC1155
+  - [ ] support ERC777 
+  - [X] support ERC1155
 - [ ] Additonal Feature  
   - [ ] Zero-Knowledge Proof (ZKP) private txs  
   - [ ] Mint  
@@ -60,4 +60,4 @@ Todo
 
 ## disclaimer 
 - this smart contract not implementing Ownable yet.  
-- ...
+- this smart contract provide code structure your can modified it, if needed.

@@ -4,7 +4,7 @@ pragma solidity >=0.8.0 <0.9.0;
 import "./TokenERC20.sol";
 import "./TokenERC721.sol";
 // import "./TokenERC777.sol";
-// import "./TokenERC1155.sol";
+import "./TokenERC1155.sol";
 
 contract TokenFactory {
     
@@ -46,7 +46,9 @@ contract TokenFactory {
         return (address(token),erc20Address.length-1);
     }
 
-    /** 
+    /**
+     * @param _name name
+     * @param _symbol symbol
      * @dev to create token with ERC721 standard require following parameters
      * @return address after token created successful
     */
@@ -71,16 +73,19 @@ contract TokenFactory {
     }
 
     /** 
+     * @param _tokens tuple(uint256,uint256)[]
+     * @param _uri uri path
      * @dev to create token with ERC1155 standard require following parameters
      * @return address after token created successful
     */
-    function createERC1155() public returns (address, uint256) {
+    function createERC1155(_ERC1155.Token[] memory _tokens, string memory _uri) public returns (address, uint256) {
         // TODO: define params
-        _token token = new _token();
+        _ERC1155 token = new _ERC1155(_tokens,_uri);
         erc1155Address.push(address(token));
         emit TokenCreated(address(token));
         return (address(token),erc1155Address.length-1);
     }
+
 
     // call function for retrieve `address` by `index`
 
