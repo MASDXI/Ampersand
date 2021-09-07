@@ -8,7 +8,7 @@ describe("TokenFactory", function () {
   const amount = ethers.utils.parseEther("1")
   
   // TokenA is ERC20
-  const mockTokenA = "0xa16E02E87b7454126E5E10d957A927A7F5B5d2be"
+  const tokenA_address = "0xa16E02E87b7454126E5E10d957A927A7F5B5d2be"
   const TokenA = { 
     _name: "test",
     _symbol: "TKN",
@@ -62,13 +62,13 @@ describe("TokenFactory", function () {
       TokenA._decimals,
       TokenA._initialSupply,
       TokenA._tokenType
-    )).to.emit(token,'TokenCreated').withArgs(mockTokenA);
+    )).to.emit(token,'TokenCreated').withArgs(tokenA_address);
   });
 
   it("CreateERC20 token name check ", async function () {
     const _ERC20 = await ethers.getContractFactory("_ERC20");
     const erc20 = _ERC20.attach(mockTokenA); // The deployed contract address
-    expect(await erc20.name()).to.equal(constructor._name);
+    expect(await erc20.name()).to.equal(TokenA._name);
   });
 
 });
