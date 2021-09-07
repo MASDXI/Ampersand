@@ -7,7 +7,10 @@
     "clean": "npx hardhat clean",
     "compile": "npx hardhat compile",
     "coverage": "npx hardhat coverage",
-    "test": "npx hardhat test",
+    "test:erc20": "npx hardhat test ./test/erc20.test.js",
+    "test:erc721": "npx hardhat test ./test/erc721.js",
+    "test:erc1155": "npx hardhat test ./test/erc1155.js",
+    "test:factory": "npx hardhat test ./test/factory.test.js",
     "test-rpc": "npx hardhat node",
     "deploy-local": "npx hardhat run scripts/sample-script.js --network localhost",
     "deploy-prod": "npx hardhat run scripts/sample-script.js --network production"
