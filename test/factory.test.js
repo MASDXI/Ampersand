@@ -67,7 +67,7 @@ describe("TokenFactory", function () {
 
   it("CreateERC20 token name check ", async function () {
     const _ERC20 = await ethers.getContractFactory("_ERC20");
-    const erc20 = _ERC20.attach(mockTokenA); // The deployed contract address
+    const erc20 = _ERC20.attach(tokenA_address); // The deployed contract address
     expect(await erc20.name()).to.equal(TokenA._name);
   });
 
