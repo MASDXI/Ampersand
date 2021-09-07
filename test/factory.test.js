@@ -1,19 +1,47 @@
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
 
-describe("Factory", function () {
-  it("Should return the new greeting once it's changed", async function () {
-    const Greeter = await ethers.getContractFactory("Greeter");
-    const greeter = await Greeter.deploy("Hello, world!");
-    await greeter.deployed();
+describe("TokenFactory", function () {
 
-    expect(await greeter.greet()).to.equal("Hello, world!");
+  let token;
+  let accounts;
+  const constructor = {
+    _name: "test",
+    _symbol: "TKN",
+    _decimals: 18,
+    _initialSupply: 1000000,
+    _tokenType: 0
+  }
+  const amount = ethers.utils.parseEther("1")
 
-    const setGreetingTx = await greeter.setGreeting("Hola, mundo!");
+  before(async () => {
+    const contract = await ethers.getContractFactory("TokenFactory");
+    token = await contract.deploy();
+    accounts = await ethers.getSigners();
+    await token.deployed();
 
-    // wait until the transaction is mined
-    await setGreetingTx.wait();
-
-    expect(await greeter.greet()).to.equal("Hola, mundo!");
   });
+
+  it("CreateERC20 token", async function () {
+    // How to retrevie contract address from event 'TokenCreate'
+    // const createToken = await token.createERC20(
+    //   constructor._name,
+    //   constructor._symbol,
+    //   constructor._decimals,
+    //   constructor._initialSupply,
+    //   constructor._tokenType);
+    // const receipt = await createToken.wait();
+    // const output = receipt.events.filter(({event}) => event === "TokenCreated");
+    // const address = output[0].args['tokenAddress'];
+    // console.log(address);
+
+    await expect(token.createERC20(
+      constructor._name,
+      constructor._symbol,
+      constructor._decimals,
+      constructor._initialSupply,
+      constructor._tokenType
+    )).to.emit(token,'TokenCreated').withArgs("0xa16E02E87b7454126E5E10d957A927A7F5B5d2be");
+  });
+
 });
