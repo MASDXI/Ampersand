@@ -1,5 +1,38 @@
 # Advanced Sample Hardhat Project
 
+Project directory structure
+``` shell
+.
+├── contracts
+│   ├── TokenERC1155.sol
+│   ├── TokenERC20.sol
+│   ├── TokenERC721.sol
+│   ├── TokenERC777.sol.develop
+│   └── TokenFactory.sol
+├── coverage.json
+├── docs
+│   ├── ERC1155.md
+│   ├── ERC20.md
+│   ├── ERC721.md
+│   └── ERC777.md
+├── hardhat.config.js
+├── LICENSE
+├── package.json
+├── package-lock.json
+├── README.md
+├── scripts
+│   └── deploy.js
+├── test
+│   ├── erc1155.test.js
+│   ├── erc20_capped.test.js
+│   ├── erc20_unCapped.test.js
+│   ├── erc721.test.js
+│   ├── erc777.test.js
+│   ├── factory.test.js
+└── yarn.lock
+
+```
+
 This project demonstrates an advanced Hardhat use case, integrating other tools commonly used alongside Hardhat in the ecosystem.
 
 The project comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts. It also comes with a variety of other tools, preconfigured to work with the project code.
