@@ -43,6 +43,9 @@ Try running some of the following tasks:
 yarn clean
 yarn compile
 yarn coverage // coverage is unsport
+yarn deploy-local
+yarn deploy-prod
+yarn verify
 yarn test:erc20_capped
 yarn test:erc20_unCapped
 yarn test:erc721
@@ -51,9 +54,6 @@ yarn test:factory
 yarn node
 yarn help
 REPORT_GAS=true npx hardhat test
-npx hardhat coverage
-npx hardhat run scripts/deploy.js
-node scripts/deploy.js
 npx eslint '**/*.js'
 npx eslint '**/*.js' --fix
 npx prettier '**/*.{json,sol,md}' --check
@@ -69,11 +69,20 @@ To try out Etherscan verification, you first need to deploy a contract to an Eth
 In this project, copy the .env.template file to a file named .env, and then edit it to fill in the details. Enter your Etherscan API key, your Ropsten node URL (eg from Alchemy), and the private key of the account which will send the deployment transaction. With a valid .env file in place, first deploy your contract:
 
 ```shell
-hardhat run --network ropsten scripts/deploy.js
+yarn deploy
+npx hardhat run --network ropsten scripts/deploy.js
 ```
 
 Then, copy the deployment address and paste it in to replace `DEPLOYED_CONTRACT_ADDRESS` in this command:
 
 ```shell
+yarn verify
 npx hardhat verify --network ropsten DEPLOYED_CONTRACT_ADDRESS "Hello, Hardhat!"
 ```
+
+# Documents
+
+- [ERC20](./docs/ERC20)  
+- [ERC721](./docs/ERC721)  
+- [ERC777](./docs/ERC777)  
+- [ERC1155](./docs/ERC1155)  
