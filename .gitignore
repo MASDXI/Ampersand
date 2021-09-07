@@ -2,6 +2,7 @@ node_modules
 coverage
 .env
 coverage.json
+build
 
 #Hardhat and plugin files
 cache
