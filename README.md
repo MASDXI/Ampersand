@@ -7,12 +7,17 @@ The project comes with a sample contract, a test for that contract, a sample scr
 Try running some of the following tasks:
 
 ```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-npx hardhat help
+npx hardhat accounts //
+yarn clean
+yarn compile
+yarn coverage // coverage is unsport
+yarn test:erc20_capped
+yarn test:erc20_unCapped
+yarn test:erc721
+yarn test:erc1155
+yarn test:factory
+yarn node
+yarn help
 REPORT_GAS=true npx hardhat test
 npx hardhat coverage
 npx hardhat run scripts/deploy.js

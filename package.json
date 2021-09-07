@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "npx hardhat clean",
     "compile": "npx hardhat compile",
-    "coverage": "npx hardhat coverage",
+    "coverage": "npx hardhat coverage --testfiles ./test",
     "test:erc20:capped": "npx hardhat test ./test/erc20_capped.test.js",
     "test:erc20:uncapped": "npx hardhat test ./test/erc20_unCapped.test.js",
     "test:erc721": "npx hardhat test ./test/erc721.js",
