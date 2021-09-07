@@ -1,13 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.0 <0.9.0;
 
-// import callback node_modules
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-
-// import callback url
-// import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/ERC20.sol";
-// import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol";
 
 contract _ERC20 is ERC20, Ownable {
     
@@ -30,7 +25,7 @@ contract _ERC20 is ERC20, Ownable {
     }
 
     modifier unCapped {
-      require(tokenType == _token.TOKEN_TYPE.UNCAPPED);
+      require(tokenType == _ERC20.TOKEN_TYPE.UNCAPPED,"support only uncapped token");
       _;
     }
 

@@ -3,7 +3,7 @@ pragma solidity >=0.8.0 <0.9.0;
 
 import "./TokenERC20.sol";
 import "./TokenERC721.sol";
-// import "./TokenERC777.sol";
+//import "./TokenERC777.sol";
 import "./TokenERC1155.sol";
 
 contract TokenFactory {
@@ -33,10 +33,10 @@ contract TokenFactory {
         string memory _symbol, 
         uint8 _decimals,
         uint256 _totalSupply,
-        _token.TOKEN_TYPE _tokenType
+        _ERC20.TOKEN_TYPE _tokenType
     ) public returns (address, uint256) {
         // TODO: adding `_privacyType` type enum for intregrating privacy feature.
-        _token token = new _token(_name, 
+        _ERC20 token = new _ERC20(_name, 
             _symbol, 
             _decimals, 
             _totalSupply, 
@@ -54,7 +54,7 @@ contract TokenFactory {
     */
     function createERC721(string memory _name, string memory _symbol) public returns (address, uint256) {
         // TODO: define params
-        _token token = new _token(_name, _symbol);
+        _ERC721 token = new _ERC721(_name, _symbol);
         erc777Address.push(address(token));
         emit TokenCreated(address(token));
         return (address(token),erc777Address.length-1);
@@ -64,13 +64,13 @@ contract TokenFactory {
      * @dev to create token with ERC777 standardrequire following parameters
      * @return address after token created successful
     */
-    function createERC777() public returns (address, uint256) {
-        // TODO: define params
-        _token token = new _token();
-        erc777Address.push(address(token));
-        emit TokenCreated(address(token));
-        return (address(token),erc777Address.length-1);
-    }
+    // function createERC777() public returns (address, uint256) {
+    //     // TODO: define params
+    //     _ERC777 token = new _ERC777();
+    //     erc777Address.push(address(token));
+    //     emit TokenCreated(address(token));
+    //     return (address(token),erc777Address.length-1);
+    // }
 
     /** 
      * @param _tokens tuple(uint256,uint256)[]

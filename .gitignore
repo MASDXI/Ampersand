@@ -1,2 +1,9 @@
 node_modules
-build
+coverage
+.env
+coverage.json
+
+#Hardhat and plugin files
+cache
+artifacts
+.solcover.js
