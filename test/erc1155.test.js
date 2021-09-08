@@ -5,22 +5,12 @@ describe("ERC721 non fungible token", function () {
 
   let token;
   let accounts;
-  const constructor = {
-    _name: "test",
-    _symbol: "TKN",
-    _initialSupply: 1000000,
-  }
+  const constructor = []
   const amount = ethers.utils.parseEther("1")
 
   before(async () => {
-    const contract = await ethers.getContractFactory("_ERC20");
-    token = await contract.deploy(
-      constructor._name,
-      constructor._symbol,
-      constructor._decimals,
-      constructor._initialSupply,
-      constructor._tokenType
-    );
+    const contract = await ethers.getContractFactory("_ERC1155");
+    token = await contract.deploy();
     accounts = await ethers.getSigners();
     await token.deployed();
 

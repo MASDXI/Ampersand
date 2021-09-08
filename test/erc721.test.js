@@ -9,8 +9,8 @@ describe("ERC721 non fungible token", function () {
     _name: "test",
     _symbol: "TKN",
     _initialSupply: 1000000,
-  }
-  const amount = ethers.utils.parseEther("1")
+  };
+  const amount = ethers.utils.parseEther("1");
 
   before(async () => {
     const contract = await ethers.getContractFactory("_ERC721");
@@ -31,15 +31,7 @@ describe("ERC721 non fungible token", function () {
     expect(await token.symbol()).to.equal(constructor._symbol);
   });
 
-  // it("Assigns initial balance", async function() {
-  //   expect(await token.balanceOf(accounts[0].address)).to.equal(
-  //     ethers.utils.parseEther(
-  //       constructor._initialSupply.toString()
-  //     ));
-  // });
-  
-  // it("capped token mint function should be reverted", async function() {
-  //  await expect(token.mint(accounts[0].address,amount)).to.be.revertedWith('support only uncapped token');
-  // });
-
+  it("mint token check", async function () {
+    // expect(await token.symbol()).to.equal(constructor._symbol);
+  });
 });

@@ -11,8 +11,8 @@ describe("ERC20 fungible token Uncapped", function () {
     _decimals: 18,
     _initialSupply: 1000000,
     _tokenType: 1
-  }
-  const amount = ethers.utils.parseEther("1")
+  };
+  const amount = ethers.utils.parseEther("1");
 
   before(async () => {
     const contract = await ethers.getContractFactory("_ERC20");
