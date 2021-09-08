@@ -13,8 +13,9 @@
     "test:erc1155": "npx hardhat test ./test/erc1155.test.js",
     "test:factory": "npx hardhat test ./test/factory.test.js",
     "test-rpc": "npx hardhat node",
-    "deploy-local": "npx hardhat run scripts/deploy.js --network localhost",
-    "deploy-prod": "npx hardhat run scripts/deploy.js --network production"
+    "deploy:factory:local": "npx hardhat run scripts/deploy-factory.js --network localhost",
+    "deploy:factory:erc20:local": "npx hardhat run scripts/deploy-factory-with-token.js --network localhost",
+    "deploy-prod": "npx hardhat run scripts/deploy-factory.js --network production"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.3.1"
