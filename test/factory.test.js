@@ -1,7 +1,7 @@
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
 
-describe("TokenFactory", function () {
+describe("TokenFactory", async function () {
 
   let token;
   let accounts;
@@ -10,20 +10,20 @@ describe("TokenFactory", function () {
   // TokenA is ERC20
   const tokenA_address = "0xa16E02E87b7454126E5E10d957A927A7F5B5d2be";
   const TokenA = { 
-    _name: "test",
-    _symbol: "TKN",
+    _name: "FungibleToken",
+    _symbol: "FT",
     _decimals: 18,
     _initialSupply: 1000000,
     _tokenType: 0
   };
 
   // TokenB is ERC721
-  // const mockTokenB = <CONTRACT_ADDRESS>
-  // const TokenB = { 
-  //   _name: "test",
-  //   _symbol: "TKN",
-  // };
-
+  const tokenB_address = "0xB7A5bd0345EF1Cc5E66bf61BdeC17D2461fBd968";
+  const TokenB = { 
+    _name: "NonFungibleToken",
+    _symbol: "NFR",
+  };
+  
   // // TokenC is ERC1155
   // // const mockTokenC = <CONTRACT_ADDRESS>
   // const TokenC = [];
@@ -33,7 +33,6 @@ describe("TokenFactory", function () {
     token = await contract.deploy();
     accounts = await ethers.getSigners();
     await token.deployed();
-
   });
 
   it("CreateERC20 token", async function () {
@@ -61,16 +60,33 @@ describe("TokenFactory", function () {
   });
 
   it("CreateERC20 token name check ", async function () {
-    const _ERC20 = await ethers.getContractFactory("_ERC20");
-    const erc20 = _ERC20.attach(tokenA_address); // The deployed contract address
-    expect(await erc20.name()).to.equal(TokenA._name);
+    const contract = await ethers.getContractFactory("_ERC20");
+    const token = contract.attach(tokenA_address);
+    expect(await token.name()).to.equal(TokenA._name);
   });
 
-  // it("CreateERC721 token name check ", async function () {
-  //   const _ERC721 = await ethers.getContractFactory("_ERC721");
-  //   const erc721 = _ERC721.attach(tokenB_address); // The deployed contract address
-  //   expect(await erc721.name()).to.equal(TokenB._name);
-  // });
+  it("capped token mint function should be reverted", async function() {
+    const contract = await ethers.getContractFactory("_ERC20");
+    const token = contract.attach(tokenA_address);
+    const wallet = token.connect(accounts[0]);
+    await expect(wallet.mint(
+      accounts[0].address,
+      amount
+    )).to.be.revertedWith('support only uncapped token');
+   }); 
+
+  it("CreateERC2721 token", async function () {
+    await expect(token.createERC721(
+      TokenB._name,
+      TokenB._symbol,
+    )).to.emit(token,'TokenCreated').withArgs(tokenB_address);
+  });
+
+  it("CreateERC721 token name check ", async function () {
+    const contract = await ethers.getContractFactory("_ERC721");
+    const token = contract.attach(tokenB_address);
+    expect(await token.name()).to.equal(TokenB._name);
+  });
 
   // it("CreateERC1155 token name check ", async function () {
   //   const _ERC1155 = await ethers.getContractFactory("_ERC1155");
