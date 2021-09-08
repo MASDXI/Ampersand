@@ -87,41 +87,33 @@ contract TokenFactory {
     }
 
 
-    // call function for retrieve `address` by `index`
-
+    // TODO call function for retrieve `address` by `index`
     // function getTokenAddress(uint256 _index, uint256 _tokenType) public view returns (address){
     //     if ( _tokenType == ERC_20) {
     //         return erc20Address[_index];
     //     }
-
     //     if ( _tokenType == ERC_721) {
     //         return erc20Address[_index];
     //     }
-
     //     if ( _tokenType == ERC_777) {
     //         return erc20Address[_index];
     //     }
-
     //     if ( _tokenType == ERC_1155) {
     //         return erc20Address[_index];
     //     }
     // }
     
-    // call function for retrieve `array.length` by `tokentype`
-
+    // TODO call function for retrieve `array.length` by `tokentype`
     // function getTokenLength(uint256 _tokenType) public view returns (uint256){
     //     if ( _tokenType == ERC_20) {
     //         return erc20Address.length;
     //     }
-
     //     if ( _tokenType == ERC_721) {
     //         return erc721Address.length;
     //     }
-
     //     if ( _tokenType == ERC_777) {
     //         return erc777Address.length;
     //     }
-
     //     if ( _tokenType == ERC_1155) {
     //         return erc1155Address.length;
     //     }
