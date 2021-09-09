@@ -37,22 +37,23 @@ This project demonstrates an advanced Hardhat use case, integrating other tools 
 
 The project comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts. It also comes with a variety of other tools, preconfigured to work with the project code.
 
-Try running some of the following tasks:
+Try running some of the following tasks: `yarn`
 
 ```shell
-yarn clean
-yarn compile
-yarn coverage // coverage is unsport
-yarn deploy-local
-yarn deploy-prod
-yarn verify
-yarn test:erc20_capped
-yarn test:erc20_unCapped
-yarn test:erc721
-yarn test:erc1155
-yarn test:factory
-yarn node
-yarn help
+clean
+compile
+coverage
+test:erc20:capped
+test:erc20:uncapped
+test:erc721
+test:erc1155
+test:factory
+test-rpc
+deploy:factory:local
+deploy:factory:erc20:local
+deploy:factory:ropsten
+deploy-prod
+verify:ropsten
 REPORT_GAS=true npx hardhat test
 npx eslint '**/*.js'
 npx eslint '**/*.js' --fix
@@ -70,14 +71,12 @@ In this project, copy the .env.template file to a file named .env, and then edit
 
 ```shell
 yarn deploy
-npx hardhat run --network ropsten scripts/deploy.js
 ```
 
 Then, copy the deployment address and paste it in to replace `DEPLOYED_CONTRACT_ADDRESS` in this command:
 
 ```shell
-yarn verify
-npx hardhat verify --network ropsten DEPLOYED_CONTRACT_ADDRESS "Hello, Hardhat!"
+yarn verify DEPLOYED_CONTRACT_ADDRESS CONS_ARGS1 CONS_ARGS2
 ```
 
 # Documents
