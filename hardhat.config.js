@@ -1,5 +1,4 @@
-require("dotenv").config();
-
+require("dotenv").config('');
 require("@nomiclabs/hardhat-etherscan");
 require("@nomiclabs/hardhat-waffle");
 require("hardhat-gas-reporter");
@@ -7,7 +6,18 @@ require("solidity-coverage");
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
+task("accounts", "Prints the list of accounts", async () => {
+  const accounts = await ethers.getSigners();
 
+  for (const account of accounts) {
+    console.log("address :",account.address);
+  }
+});
+
+task("test-com", "Prints the list of accounts", async () => {
+  const hre = require("hardhat");
+  await hre.run("compile");
+});
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more
 
@@ -18,20 +28,11 @@ module.exports = {
   solidity: {
     compilers: [
       {
-        version: "0.6.0",
+        version: "0.8.7",
         settings: {
           optimizer: {
             enabled: true,
             runs: 200,
-          }
-        }
-      },
-      {
-        version: "0.8.7",
-        settings: {
-            optimizer: {
-              enabled: true,
-              runs: 200,
           }
         }
       }
@@ -43,10 +44,10 @@ module.exports = {
       initialBaseFeePerGas: 0, // workaround from https://github.com/sc-forks/solidity-coverage/issues/652#issuecomment-896330136 . Remove when that issue is closed.
     },
     ropsten: {
-      url: process.env.ROPSTEN_URL || "",
+      url: process.env.ROPSTEN_URL,
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
-    },
+    }
   },
   gasReporter: {
     enabled: process.env.REPORT_GAS !== undefined,
