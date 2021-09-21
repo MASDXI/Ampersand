@@ -10,7 +10,7 @@ contract _ERC721 is ERC721URIStorage, Ownable {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
     enum TOKEN_TYPE {TRANSFERABLE,UNTRANFERABLE}
-    bool private royalty
+    bool private royalty;
     TOKEN_TYPE public tokenType;
 
     constructor(
@@ -35,9 +35,9 @@ contract _ERC721 is ERC721URIStorage, Ownable {
         return newTokenId;
     }
 
-    function Transfer(address _address, address _to, uint256 _tokenId) public transferable return (bool) {
+    function Transfer(address _address, address _to, uint256 _tokenId) public transferable returns (bool) {
         _transfer(_address,_to,_tokenId);
-        return true
+        return true;
     }
 
     // This function with implementing when needed usually on marketplace platform
