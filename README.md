@@ -1,5 +1,20 @@
 # Advanced Sample Hardhat Project
 
+## Required Software
+
+-   Node Js [Download](https://nodejs.org/en/)
+-   Git [Download](https://git-scm.com/)
+
+If you don't have a yarn. Install yarn by the command below.
+``` 
+npm install --global yarn
+``` 
+
+And then.
+``` 
+yarn install
+``` 
+
 Project directory structure
 ``` shell
 .
