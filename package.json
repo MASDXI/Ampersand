@@ -17,7 +17,8 @@
     "deploy:factory:erc20:local": "npx hardhat run scripts/deploy-factory-with-token.js --network localhost",
     "deploy:factory:ropsten": "npx hardhat run scripts/deploy-factory.js --network ropsten",
     "deploy-prod": "npx hardhat run scripts/deploy-factory.js --network production",
-    "verify:ropsten": "npx hardhat verify --network ropsten"
+    "verify:ropsten": "npx hardhat verify --network ropsten",
+    "format": "npx prettier --write contracts/**/*.sol"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.3.1"
