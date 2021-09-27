@@ -55,27 +55,27 @@ The project comes with a sample contract, a test for that contract, a sample scr
 Try running some of the following tasks: `yarn`
 
 ```shell
-clean
-compile
-coverage
-test:erc20:capped
-test:erc20:uncapped
-test:erc721
-test:erc1155
-test:factory
-test-rpc
-deploy:factory:local
-deploy:factory:erc20:local
-deploy:factory:ropsten
-deploy-prod
-verify:ropsten
-REPORT_GAS=true npx hardhat test
-npx eslint '**/*.js'
-npx eslint '**/*.js' --fix
-npx prettier '**/*.{json,sol,md}' --check
-npx prettier '**/*.{json,sol,md}' --write
-npx solhint 'contracts/**/*.sol'
-npx solhint 'contracts/**/*.sol' --fix
+yarn clean
+yarn compile
+yarn coverage
+yarn test:erc20:capped
+yarn test:erc20:uncapped
+yarn test:erc721
+yarn test:erc1155
+yarn test:factory
+yarn test-rpc
+yarn deploy:factory:local
+yarn deploy:factory:erc20:local
+yarn deploy:factory:ropsten
+yarn deploy-prod
+yarn verify:ropsten
+yarn REPORT_GAS=true npx hardhat test
+yarn npx eslint '**/*.js'
+yarn npx eslint '**/*.js' --fix
+yarn npx prettier '**/*.{json,sol,md}' --check
+yarn npx prettier '**/*.{json,sol,md}' --write
+yarn npx solhint 'contracts/**/*.sol'
+yarn npx solhint 'contracts/**/*.sol' --fix
 ```
 
 # Etherscan verification
