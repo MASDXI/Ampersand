@@ -38,4 +38,7 @@ contract TokenFactoryERC721 {
         emit TokenCreated(address(token));
         return (address(token),erc721Address.length-1);
     }
+
+    // TODO return address customer contract.
+    // TODO withdraw function.
 }
