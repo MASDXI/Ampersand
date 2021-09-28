@@ -7,12 +7,6 @@ import "@openzeppelin/contracts/utils/Strings.sol";
 
 contract _ERC721 is ERC721Enumerable, Ownable {
     
-    // platform addresses
-    address private feesAddress = 0x652bdd352F620876A1C98d8d59DDf2Fa5cf08a36;
-
-    // team addresses
-    address[] private teamAddress;
-
     //ERROR CODE
     //001: Sale ended
     //002: Exceeds maximum supply
@@ -20,6 +14,12 @@ contract _ERC721 is ERC721Enumerable, Ownable {
     //004: Over maximum can buy
     //005: ETH not enough
     //006: 0.1 ETH min withdraw
+
+    // platform addresses
+    address private feesAddress = 0x652bdd352F620876A1C98d8d59DDf2Fa5cf08a36;
+
+    // team addresses
+    address[] private teamAddress;
 
     string private baseTokenURI;
     uint256 private price;
