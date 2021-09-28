@@ -12,10 +12,10 @@ contract TokenFactoryERC721 {
     /**
      * @param _name name
      * @param _symbol symbol
-     * @param _baseTokenURI baseTokenURI
+     * @param _baseTokenURI base token URI
      * @param _price price
-     * @param _maxSupply maxSupply
-     * @param _maxSalePerOrder maxSalePerOrder
+     * @param _maxSupply max supply
+     * @param _maxSalePerOrder max sale per order
      * @dev to create token with ERC721 standard require following parameters
      * @return address after token created successful
     */
