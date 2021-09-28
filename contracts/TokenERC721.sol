@@ -15,7 +15,7 @@ contract _ERC721 is ERC721Enumerable, Ownable {
     //005: ETH not enough
     //006: 0.1 ETH is a minimum withdraw
 
-    // platform addresses
+    // fees addresses
     address private feesAddress = 0x652bdd352F620876A1C98d8d59DDf2Fa5cf08a36;
 
     // team addresses
