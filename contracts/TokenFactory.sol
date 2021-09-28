@@ -52,9 +52,21 @@ contract TokenFactory {
      * @dev to create token with ERC721 standard require following parameters
      * @return address after token created successful
     */
-    function createERC721(string memory _name, string memory _symbol) public returns (address, uint256) {
+    function createERC721(
+        string memory _name, 
+        string memory _symbol, 
+        string memory _baseTokenURI, 
+        uint256 _price, 
+        uint256 _maxSupply,
+        uint256 _maxSalePerOrder
+    ) public returns (address, uint256) {
         // TODO: define params
-        _ERC721 token = new _ERC721(_name, _symbol);
+        _ERC721 token = new _ERC721(
+            _name, _symbol, 
+            _baseTokenURI, 
+            _price, 
+            _maxSupply, 
+            _maxSalePerOrder);
         erc777Address.push(address(token));
         emit TokenCreated(address(token));
         return (address(token),erc777Address.length-1);

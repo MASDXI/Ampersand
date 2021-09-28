@@ -2,7 +2,6 @@ const { expect } = require("chai");
 const { ethers } = require("hardhat");
 
 describe("ERC721 non fungible token", function () {
-
   let token;
   let accounts;
   const constructor = {
@@ -14,13 +13,9 @@ describe("ERC721 non fungible token", function () {
 
   before(async () => {
     const contract = await ethers.getContractFactory("_ERC721");
-    token = await contract.deploy(
-      constructor._name,
-      constructor._symbol,
-    );
+    token = await contract.deploy(constructor._name, constructor._symbol);
     accounts = await ethers.getSigners();
     await token.deployed();
-
   });
 
   it("Token name check", async function () {
