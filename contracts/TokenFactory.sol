@@ -46,9 +46,14 @@ contract TokenFactory {
         return (address(token),erc20Address.length-1);
     }
 
-    /**
+/**
      * @param _name name
      * @param _symbol symbol
+     * @param _baseTokenURI base token URI
+     * @param _price price
+     * @param _maxSupply max supply
+     * @param _maxSalePerOrder max sale per order
+     * @param _teamAddress team address
      * @dev to create token with ERC721 standard require following parameters
      * @return address after token created successful
     */
@@ -58,18 +63,19 @@ contract TokenFactory {
         string memory _baseTokenURI, 
         uint256 _price, 
         uint256 _maxSupply,
-        uint256 _maxSalePerOrder
-    ) public returns (address, uint256) {
-        // TODO: define params
+        uint256 _maxSalePerOrder,
+        address[] memory _teamAddress
+    ) public payable returns (address, uint256) {
         _ERC721 token = new _ERC721(
             _name, _symbol, 
             _baseTokenURI, 
             _price, 
             _maxSupply, 
-            _maxSalePerOrder);
-        erc777Address.push(address(token));
+            _maxSalePerOrder,
+            _teamAddress);
+        erc721Address.push(address(token));
         emit TokenCreated(address(token));
-        return (address(token),erc777Address.length-1);
+        return (address(token),erc721Address.length-1);
     }
 
     /** 
