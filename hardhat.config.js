@@ -1,4 +1,4 @@
-require("dotenv").config('');
+require("dotenv").config("");
 require("@nomiclabs/hardhat-etherscan");
 require("@nomiclabs/hardhat-waffle");
 require("hardhat-gas-reporter");
@@ -10,7 +10,7 @@ task("accounts", "Prints the list of accounts", async () => {
   const accounts = await ethers.getSigners();
 
   for (const account of accounts) {
-    console.log("address :",account.address);
+    console.log("address :", account.address);
   }
 });
 
@@ -33,21 +33,20 @@ module.exports = {
           optimizer: {
             enabled: true,
             runs: 200,
-          }
-        }
-      }
+          },
+        },
+      },
     ],
-
   },
   networks: {
     hardhat: {
       initialBaseFeePerGas: 0, // workaround from https://github.com/sc-forks/solidity-coverage/issues/652#issuecomment-896330136 . Remove when that issue is closed.
     },
-    // ropsten: {
-    //   url: process.env.ROPSTEN_URL,
-    //   accounts:
-    //     process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
-    // }
+    ropsten: {
+      url: process.env.ROPSTEN_URL,
+      accounts:
+        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+    },
   },
   gasReporter: {
     enabled: process.env.REPORT_GAS !== undefined,
@@ -58,6 +57,6 @@ module.exports = {
   },
   mocha: {
     timeout: 200000,
-    slow: '0',
-  }
+    slow: "0",
+  },
 };
