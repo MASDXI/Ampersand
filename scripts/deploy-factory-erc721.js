@@ -19,8 +19,11 @@ async function main() {
   );
   const tokenFactory = await TokenFactory.deploy();
   await tokenFactory.deployed();
-
   console.log("Token Factory deployed to:", tokenFactory.address);
+  console.log(
+    "Etherscan:",
+    process.env.ETHERSCAN_URL + "/address/" + tokenFactory.address
+  );
 }
 
 // We recommend this pattern to be able to use async/await everywhere
