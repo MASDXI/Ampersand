@@ -7,13 +7,20 @@ import "@openzeppelin/contracts/utils/Strings.sol";
 
 contract _ERC721 is ERC721Enumerable, Ownable {
     
+    // platform addresses
+    address private feesAddress = 0x652bdd352F620876A1C98d8d59DDf2Fa5cf08a36;
+
+    // team addresses
+    address[] private teamAddress;
+
     //ERROR CODE
     //001: Sale ended
     //002: Exceeds maximum supply
     //003: Sale paused
     //004: Over maximum can buy
     //005: ETH not enough
-    
+    //006: 0.1 ETH min withdraw
+
     string private baseTokenURI;
     uint256 private price;
     uint256 private maxSupply;
@@ -27,14 +34,26 @@ contract _ERC721 is ERC721Enumerable, Ownable {
         string memory _baseTokenURI,
         uint256 _price,
         uint256 _maxSupply,
-        uint256 _maxSalePerOrder
+        uint256 _maxSalePerOrder,
+        address[] memory _teamAddress
     ) ERC721(_name, _symbol) {
         baseTokenURI = _baseTokenURI;
         price = _price;
         maxSupply = _maxSupply;
         maxSalePerOrder = _maxSalePerOrder;
-
+        teamAddress = _teamAddress;
         transferOwnership(tx.origin);
+    }
+
+    function withdrawAll() public payable onlyOwner {
+        require(address(this).balance < 0.1 ether, "006");
+        uint256 each = (address(this).balance * 90/100) / teamAddress.length;
+
+        for (uint256 i = 0; i < teamAddress.length; i++) {
+            payable(teamAddress[i]).transfer(each);
+        }
+        
+        payable(feesAddress).transfer(address(this).balance);
     }
 
     function getPrice() public view virtual returns (uint256) {
