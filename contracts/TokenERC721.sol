@@ -46,6 +46,10 @@ contract _ERC721 is ERC721Enumerable, Ownable {
         transferOwnership(tx.origin);
     }
 
+    function getTokenAddress() public view virtual returns (address[] memory) {
+        return teamAddress;
+    }
+
     function getPrice() public view virtual returns (uint256) {
         return price;
     }
