@@ -119,7 +119,7 @@ contract _ERC721 is ERC721Enumerable, Ownable {
 
         TokenFactoryERC721 factory = TokenFactoryERC721(factoryAddress);
 
-        uint256 each = (address(this).balance * factory.getFees()/100) / teamAddress.length;
+        uint256 each = (address(this).balance * ((100 - factory.getFees()) / 100) / teamAddress.length);
 
         for (uint256 i = 0; i < teamAddress.length; i++) {
             payable(teamAddress[i]).transfer(each);
