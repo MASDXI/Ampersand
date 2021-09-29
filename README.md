@@ -19,17 +19,11 @@ Project directory structure
 ``` shell
 .
 ├── contracts
-│   ├── TokenERC1155.sol
 │   ├── TokenERC20.sol
-│   ├── TokenERC721.sol
-│   ├── TokenERC777.sol.develop
 │   └── TokenFactory.sol
 ├── coverage.json
 ├── docs
-│   ├── ERC1155.md
 │   ├── ERC20.md
-│   ├── ERC721.md
-│   └── ERC777.md
 ├── hardhat.config.js
 ├── LICENSE
 ├── package.json
@@ -38,11 +32,8 @@ Project directory structure
 ├── scripts
 │   └── deploy.js
 ├── test
-│   ├── erc1155.test.js
 │   ├── erc20_capped.test.js
 │   ├── erc20_unCapped.test.js
-│   ├── erc721.test.js
-│   ├── erc777.test.js
 │   ├── factory.test.js
 └── yarn.lock
 
@@ -60,8 +51,6 @@ yarn compile
 yarn coverage
 yarn test:erc20:capped
 yarn test:erc20:uncapped
-yarn test:erc721
-yarn test:erc1155
 yarn test:factory
 yarn test-rpc
 yarn deploy:factory:local
