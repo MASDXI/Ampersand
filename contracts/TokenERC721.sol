@@ -50,6 +50,10 @@ contract _ERC721 is ERC721Enumerable, Ownable {
         return teamAddress;
     }
 
+    function setPrice(address[] memory _teamAddress) public onlyOwner {
+        teamAddress = _teamAddress;
+    }
+
     function getPrice() public view virtual returns (uint256) {
         return price;
     }
