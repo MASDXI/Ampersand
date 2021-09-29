@@ -2,7 +2,6 @@ const { expect } = require("chai");
 const { ethers } = require("hardhat");
 
 describe("ERC20 fungible token Capped", function () {
-
   let token;
   let accounts;
   const constructor = {
@@ -10,7 +9,7 @@ describe("ERC20 fungible token Capped", function () {
     _symbol: "TKN",
     _decimals: 18,
     _initialSupply: 1000000,
-    _tokenType: 0
+    _tokenType: 0,
   };
   const amount = ethers.utils.parseEther("1");
 
@@ -25,7 +24,6 @@ describe("ERC20 fungible token Capped", function () {
     );
     accounts = await ethers.getSigners();
     await token.deployed();
-
   });
 
   it("Token name check", async function () {
@@ -36,13 +34,12 @@ describe("ERC20 fungible token Capped", function () {
     expect(await token.symbol()).to.equal(constructor._symbol);
   });
 
-  it("Assigns initial balance", async function() {
+  it("Assigns initial balance", async function () {
     expect(await token.balanceOf(accounts[0].address)).to.equal(
-      ethers.utils.parseEther(
-        constructor._initialSupply.toString()
-      ));
+      ethers.utils.parseEther(constructor._initialSupply.toString())
+    );
   });
-  
+
   it("Decimal check", async function () {
     expect(await token.decimals()).to.equal(constructor._decimals);
   });
@@ -51,8 +48,9 @@ describe("ERC20 fungible token Capped", function () {
     expect(await token.tokenType()).to.equal(constructor._tokenType);
   });
 
-  it("capped token mint function should be reverted", async function() {
-   await expect(token.mint(accounts[0].address,amount)).to.be.revertedWith('support only uncapped token');
+  it("capped token mint function should be reverted", async function () {
+    await expect(token.mint(accounts[0].address, amount)).to.be.revertedWith(
+      "support only uncapped token"
+    );
   });
-
 });

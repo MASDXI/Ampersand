@@ -17,7 +17,12 @@
     "deploy:factory:rinkeby": "npx hardhat run scripts/deploy-factory.js --network rinkeby",
     "deploy-prod": "npx hardhat run scripts/deploy-factory.js --network production",
     "verify:ropsten": "npx hardhat verify --network ropsten",
-    "format": "npx prettier --write contracts/**/*.sol"
+    "eslint": "npx eslint '**/*.js'",
+    "eslint-fix": "npx eslint '**/*.js' --fix",
+    "prettier": "npx prettier '**/*.{json,sol,md}' --check",
+    "prettier-fix": "npx prettier '**/*.{json,sol,md}' --write",
+    "solhint": "npx solhint 'contracts/**/*.sol'",
+    "solhint-fix": "npx solhint 'contracts/**/*.sol' --fix"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.3.1"

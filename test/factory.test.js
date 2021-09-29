@@ -2,19 +2,18 @@ const { expect } = require("chai");
 const { ethers } = require("hardhat");
 
 describe("TokenFactory", async function () {
-
   let token;
   let accounts;
   const amount = ethers.utils.parseEther("1");
-  
+
   // TokenA is ERC20
-  const tokenA_address = "0xa16E02E87b7454126E5E10d957A927A7F5B5d2be";
-  const TokenA = { 
+  const tokenAddress = "0xa16E02E87b7454126E5E10d957A927A7F5B5d2be";
+  const Token = {
     _name: "FungibleToken",
     _symbol: "FT",
     _decimals: 18,
     _initialSupply: 1000000,
-    _tokenType: 0
+    _tokenType: 0,
   };
 
   before(async () => {
@@ -39,29 +38,31 @@ describe("TokenFactory", async function () {
     // const address = output[0].args['tokenAddress'];
     // console.log("tokenAddress:",address);
 
-    await expect(token.createERC20(
-      TokenA._name,
-      TokenA._symbol,
-      TokenA._decimals,
-      TokenA._initialSupply,
-      TokenA._tokenType
-    )).to.emit(token,'TokenCreated').withArgs(tokenA_address);
+    await expect(
+      token.createERC20(
+        Token._name,
+        Token._symbol,
+        Token._decimals,
+        Token._initialSupply,
+        Token._tokenType
+      )
+    )
+      .to.emit(token, "TokenCreated")
+      .withArgs(tokenAddress);
   });
 
   it("CreateERC20 token name check ", async function () {
     const contract = await ethers.getContractFactory("_ERC20");
-    const token = contract.attach(tokenA_address);
-    expect(await token.name()).to.equal(TokenA._name);
+    const token = contract.attach(tokenAddress);
+    expect(await token.name()).to.equal(Token._name);
   });
 
-  it("capped token mint function should be reverted", async function() {
+  it("capped token mint function should be reverted", async function () {
     const contract = await ethers.getContractFactory("_ERC20");
-    const token = contract.attach(tokenA_address);
+    const token = contract.attach(tokenAddress);
     const wallet = token.connect(accounts[0]);
-    await expect(wallet.mint(
-      accounts[0].address,
-      amount
-    )).to.be.revertedWith('support only uncapped token');
-   }); 
-
+    await expect(wallet.mint(accounts[0].address, amount)).to.be.revertedWith(
+      "support only uncapped token"
+    );
+  });
 });

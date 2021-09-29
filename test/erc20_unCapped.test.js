@@ -2,7 +2,6 @@ const { expect } = require("chai");
 const { ethers } = require("hardhat");
 
 describe("ERC20 fungible token Uncapped", function () {
-
   let token;
   let accounts;
   const constructor = {
@@ -10,7 +9,7 @@ describe("ERC20 fungible token Uncapped", function () {
     _symbol: "TKN",
     _decimals: 18,
     _initialSupply: 1000000,
-    _tokenType: 1
+    _tokenType: 1,
   };
   const amount = ethers.utils.parseEther("1");
 
@@ -25,7 +24,6 @@ describe("ERC20 fungible token Uncapped", function () {
     );
     accounts = await ethers.getSigners();
     await token.deployed();
-
   });
 
   it("Token name check", async function () {
@@ -36,13 +34,12 @@ describe("ERC20 fungible token Uncapped", function () {
     expect(await token.symbol()).to.equal(constructor._symbol);
   });
 
-  it("Assigns initial balance", async function() {
+  it("Assigns initial balance", async function () {
     expect(await token.balanceOf(accounts[0].address)).to.equal(
-      ethers.utils.parseEther(
-        constructor._initialSupply.toString()
-      ));
+      ethers.utils.parseEther(constructor._initialSupply.toString())
+    );
   });
-  
+
   it("Decimal check", async function () {
     expect(await token.decimals()).to.equal(constructor._decimals);
   });
@@ -51,11 +48,10 @@ describe("ERC20 fungible token Uncapped", function () {
     expect(await token.tokenType()).to.equal(constructor._tokenType);
   });
 
-  it("uncapped token mint function", async function() {
-    const before_mint = await token.balanceOf(accounts[0].address);
-    await token.mint(accounts[0].address,amount);
-    const after_mint = await token.balanceOf(accounts[0].address);
-    expect(after_mint).to.equal((before_mint.add(amount)));
-   });
-
+  it("uncapped token mint function", async function () {
+    const beforeMint = await token.balanceOf(accounts[0].address);
+    await token.mint(accounts[0].address, amount);
+    const afterMint = await token.balanceOf(accounts[0].address);
+    expect(afterMint).to.equal(beforeMint.add(amount));
+  });
 });

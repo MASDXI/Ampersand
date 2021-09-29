@@ -19,12 +19,12 @@ async function main() {
   await tokenFactory.deployed();
 
   console.log("Token Factory deployed to:", tokenFactory.address);
-  const TokenA = { 
+  const TokenA = {
     _name: "FungibleToken",
     _symbol: "FT",
     _decimals: 18,
     _initialSupply: 1000000,
-    _tokenType: 0
+    _tokenType: 0,
   };
   const createToken = await tokenFactory.createERC20(
     TokenA._name,
@@ -32,11 +32,11 @@ async function main() {
     TokenA._decimals,
     TokenA._initialSupply,
     TokenA._tokenType
-  )
+  );
   const receipt = await createToken.wait();
-  const output = receipt.events.filter(({event}) => event === "TokenCreated");
-  const address = output[0].args['tokenAddress'];
-  console.log("createERC20 tokenAddress:",address);
+  const output = receipt.events.filter(({ event }) => event === "TokenCreated");
+  const address = output[0].args.tokenAddress;
+  console.log("createERC20 tokenAddress:", address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere

@@ -1,10 +1,10 @@
 # ERC20 Token
 
-
 `constructor`
-``` js
+
+```js
      constructor(
-        string _name, 
+        string _name,
         string _symbol,
         uint8 _decimals,
         uint256 _initialSupply,
@@ -13,24 +13,27 @@
 ```
 
 `TOKEN_TYPE`
-``` js
+
+```js
     enum TOKEN_TYPE {CAPPED,UNCAPPED}
     // 0 = CAPPED for disable mint/burn function
     // 1 = UNCAPPED for enbale mint/burn function
 ```
 
-### Data-type 
+### Data-type
 
-| VARIALBLE          | TYPE        | EXAMPLE       |
-| ------------------ | ----------- | ------------- |
-| __name_            | string      | "Basic Coin"  |
-| __symbol_          | string      | "BSC"         |
-| __decimals_        | uint8       | 18            |
-| __initialSupply_   | uint8       | 10000000      |
-| __tokenType_       | enum        | 0             |
+| VARIALBLE         | TYPE   | EXAMPLE      |
+| ----------------- | ------ | ------------ |
+| \__name_          | string | "Basic Coin" |
+| \__symbol_        | string | "BSC"        |
+| \__decimals_      | uint8  | 18           |
+| \__initialSupply_ | uint8  | 10000000     |
+| \__tokenType_     | enum   | 0            |
 
 ## ERC20 API
+
 Functions
+
 - [name](#name)
 - [symbol](#symbol)
 - [decimals](#decimals)
@@ -44,71 +47,79 @@ Functions
 - [mint](#mint)
 - [burn](#burn)
 
-### `decimals`  
-``` js
+### `decimals`
+
+```js
     decimals() -> uint8
-    // method: callcontract  
+    // method: callcontract
 ```
 
-### `name`  
-``` js
+### `name`
+
+```js
     name() -> string
-    // method: callcontract  
+    // method: callcontract
 ```
 
-### `symbol`  
-``` js
+### `symbol`
+
+```js
     symbol() -> string
-    // method: callcontract  
+    // method: callcontract
 ```
 
-### `totalSupply`  
-``` js
+### `totalSupply`
+
+```js
     totalSupply() -> uint256
-    // method: callcontract  
+    // method: callcontract
 ```
-### `#balanceOf`  
-``` js
+
+### `#balanceOf`
+
+```js
     balanceOf(address _account) -> uint256
-    // method: callcontract  
+    // method: callcontract
 ```
 
 ### `transfer`
-``` js
+
+```js
     transfer(address _account, uint256 _amount) -> bool
-    // method: sendtocontract  
+    // method: sendtocontract
 ```
 
 ### `transferFrom`
-``` js
+
+```js
     allowance(address _account, uint256 _amount) -> bool
-    // method: sendtocontract  
+    // method: sendtocontract
 ```
 
 ### `increaseAllowance`
-``` js
+
+```js
     allowance() -> bool
-    // method: sendtocontract  
+    // method: sendtocontract
 ```
 
 ### `decreaseAllowance`
-``` js
+
+```js
     allowance() -> bool
-    // method: sendtocontract  
+    // method: sendtocontract
 ```
 
 ### `mint`
-``` js
+
+```js
     mint(address _account, uint256 _amount) -> bool
-    // method: sendtocontract  
+    // method: sendtocontract
 ```
 
 ### `burn`
-``` js
+
+```js
     burn(address _account, uint256 _amount) -> bool
-    // method: sendtocontract  
+    // method: sendtocontract
 ```
-
-
-
-

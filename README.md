@@ -2,28 +2,31 @@
 
 ## Required Software
 
--   Node Js [Download](https://nodejs.org/en/)
--   Git [Download](https://git-scm.com/)
+- Node Js [Download](https://nodejs.org/en/)
+- Git [Download](https://git-scm.com/)
 
 If you don't have a yarn. Install yarn by the command below.
-``` 
+
+```
 npm install --global yarn
-``` 
+```
 
 And then.
-``` 
+
+```
 yarn install
-``` 
+```
 
 Project directory structure
-``` shell
+
+```shell
 .
 ├── contracts
 │   ├── TokenERC20.sol
 │   └── TokenFactory.sol
 ├── coverage.json
 ├── docs
-│   ├── ERC20.md
+│   └── ERC20.md
 ├── hardhat.config.js
 ├── LICENSE
 ├── package.json
@@ -34,7 +37,7 @@ Project directory structure
 ├── test
 │   ├── erc20_capped.test.js
 │   ├── erc20_unCapped.test.js
-│   ├── factory.test.js
+│   └── factory.test.js
 └── yarn.lock
 
 ```
@@ -58,6 +61,7 @@ yarn deploy:factory:erc20:local
 yarn deploy:factory:ropsten
 yarn deploy-prod
 yarn verify:ropsten
+yarn
 yarn REPORT_GAS=true npx hardhat test
 yarn npx eslint '**/*.js'
 yarn npx eslint '**/*.js' --fix
@@ -85,7 +89,4 @@ yarn verify DEPLOYED_CONTRACT_ADDRESS CONS_ARGS1 CONS_ARGS2
 
 # Documents
 
-- [ERC20](./docs/ERC20)  
-- [ERC721](./docs/ERC721)  
-- [ERC777](./docs/ERC777)  
-- [ERC1155](./docs/ERC1155)  
+- [ERC20](./docs/ERC20)
