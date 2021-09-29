@@ -43,6 +43,10 @@ contract TokenFactoryERC721 is Ownable {
         return (address(token),erc721Address.length-1);
     }
 
+    // function getTokenAddress() public view virtual returns (address[] memory) {
+    //     return erc721Address;
+    // }
+
     function getFeesAddress() public view virtual returns (address) {
         return feesAddress;
     }
@@ -75,6 +79,7 @@ contract TokenFactoryERC721 is Ownable {
         paused = _paused;
     }
 
-    // TODO return address customer contract.
-    // TODO withdraw function.
+    function withdrawAll() public payable onlyOwner {
+        payable(feesAddress).transfer(address(this).balance);
+    }
 }
