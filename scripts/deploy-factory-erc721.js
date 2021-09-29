@@ -3,7 +3,8 @@
 //
 // When running the script with `npx hardhat run <script>` you'll find the Hardhat
 // Runtime Environment's members available in the global scope.
-const hre = require("hardhat");
+// const ethers = require("ethers");
+const hardhat = require("hardhat");
 
 async function main() {
   // Hardhat always runs the compile task when running scripts with its command
@@ -14,7 +15,7 @@ async function main() {
   // await hre.run('compile');
 
   // We get the contract to deploy
-  const TokenFactory = await hre.ethers.getContractFactory(
+  const TokenFactory = await hardhat.ethers.getContractFactory(
     "TokenFactoryERC721"
   );
   const tokenFactory = await TokenFactory.deploy();
@@ -24,6 +25,12 @@ async function main() {
     "Etherscan:",
     process.env.ETHERSCAN_URL + "/address/" + tokenFactory.address
   );
+
+  // const receipt = await createToken.wait();
+  // console.log(receipt.address);
+  // const output = receipt.events.filter(({ event }) => event === "TokenCreated");
+  // const address = output[0].args.tokenAddress;
+  // console.log("createERC20 tokenAddress:", address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere

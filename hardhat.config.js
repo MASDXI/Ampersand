@@ -52,6 +52,8 @@ module.exports = {
       url: process.env.NETWORK_URL,
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+      // gas: 5000000,
+      // gasPrice: 70000000000, // 70 gwei
     },
   },
   gasReporter: {
