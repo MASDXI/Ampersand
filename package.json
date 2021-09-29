@@ -17,6 +17,7 @@
     "deploy:factory:erc20:local": "npx hardhat run scripts/deploy-factory-with-token.js --network localhost",
     "deploy:factory-erc721:ropsten": "npx hardhat run scripts/deploy-factory-erc721.js --network ropsten",
     "deploy:factory-erc721:rinkeby": "npx hardhat run scripts/deploy-factory-erc721.js --network rinkeby",
+    "deploy:factory-erc721-getstart:rinkeby": "npx hardhat run scripts/deploy-factory-erc721-getstart.js --network rinkeby",
     "deploy:factory:ropsten": "npx hardhat run scripts/deploy-factory.js --network ropsten",
     "deploy:factory:rinkeby": "npx hardhat run scripts/deploy-factory.js --network rinkeby",
     "deploy-prod": "npx hardhat run scripts/deploy-factory.js --network production",
