@@ -131,4 +131,8 @@ contract _ERC721 is ERC721Enumerable, Ownable {
         
         payable(factory.getFeesAddress()).transfer(address(this).balance);
     }
+
+    function _baseURI() internal view override virtual returns (string memory) {
+        return baseTokenURI;
+    }
 }
