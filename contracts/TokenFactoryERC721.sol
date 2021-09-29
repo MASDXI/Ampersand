@@ -12,7 +12,11 @@ contract TokenFactoryERC721 is Ownable {
 
     event TokenCreated(address indexed tokenAddress);
 
-    address[] private erc721Address;
+    struct TokenList {
+        address[] erc721Address;
+    }
+
+    mapping(address => TokenList) tokenList;
 
     address private feesAddress = 0x652bdd352F620876A1C98d8d59DDf2Fa5cf08a36;
     uint256 private fees = 10;
@@ -28,7 +32,7 @@ contract TokenFactoryERC721 is Ownable {
         uint256 _maxSupply,
         uint256 _maxSalePerOrder,
         address[] memory _teamAddress
-    ) public payable returns (address, uint256) {
+    ) public payable {
         require(!paused, "001");
         require(msg.value >= price, "002");
         _ERC721 token = new _ERC721(
@@ -38,14 +42,15 @@ contract TokenFactoryERC721 is Ownable {
             _maxSupply, 
             _maxSalePerOrder,
             _teamAddress);
-        erc721Address.push(address(token));
+
+        tokenList[tx.origin].erc721Address.push(address(token));
+
         emit TokenCreated(address(token));
-        return (address(token),erc721Address.length-1);
     }
 
-    // function getTokenAddress() public view virtual returns (address[] memory) {
-    //     return erc721Address;
-    // }
+    function getTokenAddress(address _address) public view virtual returns (address[] memory) {
+        return tokenList[_address].erc721Address;
+    }
 
     function getFeesAddress() public view virtual returns (address) {
         return feesAddress;
