@@ -4,6 +4,7 @@ pragma solidity >=0.8.0 <0.9.0;
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
+import "./TokenFactoryERC721.sol";
 
 contract _ERC721 is ERC721Enumerable, Ownable {
     
@@ -15,8 +16,8 @@ contract _ERC721 is ERC721Enumerable, Ownable {
     //005: ETH not enough
     //006: 0.1 ETH is a minimum withdraw
 
-    // fees addresses
-    address private feesAddress = 0x652bdd352F620876A1C98d8d59DDf2Fa5cf08a36;
+    // factory addresses
+    address private factoryAddress = msg.sender;
 
     // team addresses
     address[] private teamAddress;
@@ -49,8 +50,8 @@ contract _ERC721 is ERC721Enumerable, Ownable {
         return price;
     }
 
-    function setPrice(uint256 _newPrice) public onlyOwner {
-        price = _newPrice;
+    function setPrice(uint256 _price) public onlyOwner {
+        price = _price;
     }
 
     function getMaxSupply() public view virtual returns (uint256) {
@@ -85,19 +86,19 @@ contract _ERC721 is ERC721Enumerable, Ownable {
         paused = _paused;
     }
 
-    function mintTo(address _to) public onlyOwner {
+    function mintTo(address _address) public onlyOwner {
         uint256 supply = totalSupply();
         require(supply < maxSupply, "001");
 
-        _mint(_to, supply + 1);
+        _mint(_address, supply + 1);
     }
 
-    function mintFactory(address _to, uint256 num) public onlyOwner {
+    function mintFactory(address _address, uint256 num) public onlyOwner {
         uint256 supply = totalSupply();
         require(supply + num <= maxSupply, "002");
 
         for (uint256 i = 1; i <= num; i++) {
-            _mint(_to, supply + i);
+            _mint(_address, supply + i);
         }
     }
 
@@ -114,13 +115,16 @@ contract _ERC721 is ERC721Enumerable, Ownable {
     }
 
     function withdrawAll() public payable onlyOwner {
-        require(address(this).balance < 0.1 ether, "006");
-        uint256 each = (address(this).balance * 90/100) / teamAddress.length;
+        require(address(this).balance > 0.1 ether, "006");
+
+        TokenFactoryERC721 factory = TokenFactoryERC721(factoryAddress);
+
+        uint256 each = (address(this).balance * factory.getFees()/100) / teamAddress.length;
 
         for (uint256 i = 0; i < teamAddress.length; i++) {
             payable(teamAddress[i]).transfer(each);
         }
         
-        payable(feesAddress).transfer(address(this).balance);
+        payable(factory.getFeesAddress()).transfer(address(this).balance);
     }
 }
