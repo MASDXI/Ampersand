@@ -17,17 +17,6 @@ describe("TokenFactory", async function () {
     _tokenType: 0
   };
 
-  // TokenB is ERC721
-  const tokenB_address = "0xB7A5bd0345EF1Cc5E66bf61BdeC17D2461fBd968";
-  const TokenB = { 
-    _name: "NonFungibleToken",
-    _symbol: "NFR",
-  };
-  
-  // // TokenC is ERC1155
-  // // const mockTokenC = <CONTRACT_ADDRESS>
-  // const TokenC = [];
-
   before(async () => {
     const contract = await ethers.getContractFactory("TokenFactory");
     token = await contract.deploy();
@@ -74,24 +63,5 @@ describe("TokenFactory", async function () {
       amount
     )).to.be.revertedWith('support only uncapped token');
    }); 
-
-  it("CreateERC2721 token", async function () {
-    await expect(token.createERC721(
-      TokenB._name,
-      TokenB._symbol,
-    )).to.emit(token,'TokenCreated').withArgs(tokenB_address);
-  });
-
-  it("CreateERC721 token name check ", async function () {
-    const contract = await ethers.getContractFactory("_ERC721");
-    const token = contract.attach(tokenB_address);
-    expect(await token.name()).to.equal(TokenB._name);
-  });
-
-  // it("CreateERC1155 token name check ", async function () {
-  //   const _ERC1155 = await ethers.getContractFactory("_ERC1155");
-  //   const erc1155 = _ERC1155.attach(tokenB_address); // The deployed contract address
-  //   expect(await erc1155.name()).to.equal(TokenC._name);
-  // });
 
 });
