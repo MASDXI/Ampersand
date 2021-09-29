@@ -45,17 +45,6 @@ contract _ERC721 is ERC721Enumerable, Ownable {
         transferOwnership(tx.origin);
     }
 
-    function withdrawAll() public payable onlyOwner {
-        require(address(this).balance < 0.1 ether, "006");
-        uint256 each = (address(this).balance * 90/100) / teamAddress.length;
-
-        for (uint256 i = 0; i < teamAddress.length; i++) {
-            payable(teamAddress[i]).transfer(each);
-        }
-        
-        payable(feesAddress).transfer(address(this).balance);
-    }
-
     function getPrice() public view virtual returns (uint256) {
         return price;
     }
@@ -122,5 +111,16 @@ contract _ERC721 is ERC721Enumerable, Ownable {
         for (uint256 i = 1; i <= num; i++) {
             _mint(msg.sender, supply + i);
         }
+    }
+
+    function withdrawAll() public payable onlyOwner {
+        require(address(this).balance < 0.1 ether, "006");
+        uint256 each = (address(this).balance * 90/100) / teamAddress.length;
+
+        for (uint256 i = 0; i < teamAddress.length; i++) {
+            payable(teamAddress[i]).transfer(each);
+        }
+        
+        payable(feesAddress).transfer(address(this).balance);
     }
 }
