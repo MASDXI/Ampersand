@@ -1,16 +1,23 @@
 const hre = require("hardhat");
 
 async function main() {
-  const contract = await hre.ethers.getContractFactory("FactoryClone");
-  const factory = await contract.deploy();
-
+  const accounts = await ethers.getSigners();
+  const contractFactory = await hre.ethers.getContractFactory("FactoryClone");
+  const factory = await contractFactory.deploy();
   await factory.deployed();
-
   console.log("TokenFactory address:", factory.address);
-  const createToken = await factory.createToken('Adisak', 'SSSSS', 'url');
-  const receipt = await createToken.wait();
-  const output = receipt.events[0];
-  console.log("createToken address:",output.address);
+  const facy = new ethers.Contract(factory.address, contractFactory.interface, accounts[0]);
+  const createToken = await facy.createToken('My NFT', 'SSSSS', 'url');
+  const { events } = await createToken.wait();
+  const { address } = events.find(Boolean);
+  console.log("createToken address:",address);
+  const { interface } = await hre.ethers.getContractFactory("ERC721PresetMinterPauserAutoIdUpgradeable");
+  const instance = new ethers.Contract(address, interface, accounts[0]);
+  // it should be tx.origin instead of msg.sender
+  // TODO refactor erc721.sol
+  // const checkOwner = await instance.hasRole(ethers.utils.id("MINTER_ROLE"), accounts[0].address)
+  const checkOwner = await instance.hasRole(ethers.utils.id("MINTER_ROLE"), factory.address)
+  console.log('ERC721.owner:',checkOwner);
 }
 
 main()
