@@ -43,7 +43,7 @@ async function main() {
     _name: "name",
     _symbol: "symbol",
     _baseTokenURI: "url",
-    _price: hardhat.ethers.utils.parseEther("1"),
+    _price: hardhat.ethers.utils.parseEther("0"),
     _maxSupply: 888,
     _maxSalePerOrder: 20,
     _teamAddress: teamAddress,
@@ -57,7 +57,7 @@ async function main() {
     token._maxSupply,
     token._maxSalePerOrder,
     token._teamAddress,
-    { value: hardhat.ethers.utils.parseEther("1") }
+    { value: hardhat.ethers.utils.parseEther("0") }
   );
   const tx2 = await createToken.wait();
   console.log(

@@ -21,8 +21,8 @@ contract TokenFactoryERC721 is Ownable {
     address private feesAddress = 0x652bdd352F620876A1C98d8d59DDf2Fa5cf08a36;
     uint256 private fees = 10;
 
-    uint256 private price = 1 ether;
-    bool private paused = true;
+    uint256 private price = 0 ether;
+    bool private paused = false;
 
     function createERC721(
         string memory _name, 

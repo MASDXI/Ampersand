@@ -7,7 +7,7 @@ module.exports = [
   "name",
   "symbol",
   "url",
-  ethers.utils.parseEther("1"),
+  ethers.utils.parseEther("0"),
   888,
   20,
   teamAddress,

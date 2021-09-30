@@ -122,6 +122,18 @@ contract _ERC721 is ERC721Enumerable, Ownable {
         }
     }
 
+    function giftTo(uint256 num, address _address) public payable {
+        uint256 supply = totalSupply();
+        require(supply + num <= maxSupply, "002");
+        require(!paused, "003");
+        require(num <= maxSalePerOrder, "004");
+        require(msg.value >= price * num, "005");
+
+        for (uint256 i = 1; i <= num; i++) {
+            _mint(_address, supply + i);
+        }
+    }
+
     function withdrawAll() public payable onlyOwner {
         require(address(this).balance > 0.1 ether, "006");
 
