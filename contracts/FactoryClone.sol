@@ -4,9 +4,7 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/proxy/Clones.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
-//import "@openzeppelin/contracts-upgradeable/token/ERC721/presets/ERC721PresetMinterPauserAutoIdUpgradeable.sol";
 import "./ERC721Preset.sol";
-// import "./IFactoryClone.sol";
 
 contract FactoryClone is Ownable, Pausable {
 
@@ -36,8 +34,8 @@ contract FactoryClone is Ownable, Pausable {
             baseTokenURI,
             msg.sender);
         emit TokenCreated(name, symbol, baseTokenURI, clone);
-        tokenList[msg.sender].tokenAddress.push(clone);
-        return clone;
+        tokenList[msg.sender].tokenAddress.push(address(clone));
+        return address(clone);
     }
 
     function getTokenAddress(address _address) public view virtual returns (address[] memory) {
