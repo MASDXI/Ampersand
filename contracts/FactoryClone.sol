@@ -24,6 +24,7 @@ contract FactoryClone is Ownable, Pausable {
 
     constructor() public {
         tokenImplementation = address(new ERC721Preset());
+        // _pause(); set paused to true `production`
     }
 
     function createToken(
