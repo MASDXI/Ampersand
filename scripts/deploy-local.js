@@ -13,10 +13,7 @@ async function main() {
   console.log("createToken address:",address);
   const { interface } = await hre.ethers.getContractFactory("ERC721Preset");
   const instance = new ethers.Contract(address, interface, accounts[0]);
-  // it should be tx.origin instead of msg.sender
-  // TODO refactor erc721.sol
   const checkOwner = await instance.hasRole(ethers.utils.id("MINTER_ROLE"), accounts[0].address)
-  // const checkOwner = await instance.hasRole(ethers.utils.id("MINTER_ROLE"), factory.address)
   console.log('ERC721.owner:',checkOwner);
 }
 
