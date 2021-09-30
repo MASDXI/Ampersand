@@ -22,9 +22,8 @@ Project directory structure
 ```shell
 .
 ├── contracts
-│   ├── TokenERC20.sol
-│   └── TokenFactory.sol
-├── coverage.json
+│   ├── ERC721Preset.sol
+│   └── FactoryClone.sol
 ├── docs
 │   └── ERC20.md
 ├── hardhat.config.js
@@ -33,11 +32,11 @@ Project directory structure
 ├── package-lock.json
 ├── README.md
 ├── scripts
-│   └── deploy.js
+│   ├── deploy-local.sol
+│   └── deploy-ropsten.js
 ├── test
-│   ├── erc20_capped.test.js
-│   ├── erc20_unCapped.test.js
-│   └── factory.test.js
+│   ├── erc721preset.test.js
+│   └── factoryclone.test.js
 └── yarn.lock
 
 ```
@@ -55,16 +54,13 @@ yarn clean
 yarn compile
 yarn coverage
 # testing
-yarn test:erc20:capped
-yarn test:erc20:uncapped
 yarn test:factory
-yarn test:factory:gasReport
+yarn test:erc721
 yarn test-rpc
 # deployment
-yarn deploy:factory:local
-yarn deploy:factory:erc20:local
-yarn deploy:factory:ropsten
-yarn deploy-prod
+yarn deploy:local
+yarn deploy:ropsten
+yarn deploy:mainnet
 # verify
 yarn verify:ropsten
 # format
