@@ -8,6 +8,10 @@ import "./ERC721Preset.sol";
 
 contract FactoryClone is Ownable, Pausable {
 
+    // ERROR code handle
+    // `0x0001` state already set
+    // `0x0002` contract.balance > (0)
+
     address immutable tokenImplementation;
 
     event TokenCreated(string, string, string, address indexed);
@@ -42,8 +46,9 @@ contract FactoryClone is Ownable, Pausable {
         return tokenList[_address].tokenAddress;
     }
 
-    function setPaused(uint8 _state) public onlyOwner {
-        if ( _state == 1) {
+    function setPaused(bool _state) public onlyOwner {
+        require(paused() != _state, "0x000001");
+        if ( _state == true) {
             _pause();
         } else {
             _unpause();
@@ -51,6 +56,7 @@ contract FactoryClone is Ownable, Pausable {
     }
 
     function withdrawAll() public payable onlyOwner {
+        require(address(this).balance) > 0, "0x000002")
         payable(msg.sender).transfer(address(this).balance);
     }
 
