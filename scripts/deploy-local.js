@@ -7,7 +7,7 @@ async function main() {
   await factory.deployed();
 
   console.log("TokenFactory address:", factory.address);
-  const createToken = await factory.createToken('Adisak', 'SSSSS', 1);
+  const createToken = await factory.createToken('Adisak', 'SSSSS', 'url');
   const receipt = await createToken.wait();
   const output = receipt.events[0];
   console.log("createToken address:",output.address);
