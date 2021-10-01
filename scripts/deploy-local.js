@@ -11,7 +11,18 @@ async function main() {
     contractFactory.interface,
     accounts[0]
   );
-  const createToken = await facy.createToken("My NFT", "SSSSS", "url");
+  const createToken = await facy.createToken(
+    [
+      "name",
+      "symbol",
+      "url",
+      10000,
+      20,
+      1,
+      [accounts[0].address, accounts[1].address, accounts[2].address],
+    ],
+    { value: hre.ethers.utils.parseEther("0") }
+  );
   const { events } = await createToken.wait();
   const { address } = events.find(Boolean);
   console.log("createToken address:", address);
@@ -23,7 +34,11 @@ async function main() {
   );
   console.log("ERC721.owner:", checkOwner);
   const checkName = await instance.name();
-  console.log("ERC721.namw:", checkName);
+  console.log("ERC721.name:", checkName);
+  const getFactory = await instance.getFactory();
+  console.log(getFactory);
+  const getFactoryManger = await instance.getFactoryManager();
+  console.log(getFactoryManger);
 }
 
 main()

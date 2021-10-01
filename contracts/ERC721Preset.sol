@@ -55,9 +55,9 @@ contract ERC721Preset is
         uint256 _maxPurchase;
         uint256 _price;
         address[] _collaborator;
-        address factoryAddress;
     }
 
+    address private _factoryAddress;
     tokenInfo private token;
 
     function __ERC721PresetMinterPauserAutoId_init(
@@ -96,6 +96,7 @@ contract ERC721Preset is
         token._price = price;
         token._maxPurchase = maxPurchase;
         token._collaborator = collaborator;
+        _factoryAddress = _msgSender();
         _setupRole(DEFAULT_ADMIN_ROLE, owner);
         _setupRole(MINTER_ROLE, owner);
         _setupRole(PAUSER_ROLE, owner);
@@ -135,7 +136,7 @@ contract ERC721Preset is
             "ERC721Preset: must have admin role to withdraw"
         );
         // require(address(this).balance > 0.1 ether, "006");
-        IFactoryClone factory = IFactoryClone(token.factoryAddress);
+        IFactoryClone factory = IFactoryClone(_factoryAddress);
         uint256 each = ((address(this).balance *
             ((100 - factory.fees()) / 100)) / token._collaborator.length);
 
@@ -188,6 +189,15 @@ contract ERC721Preset is
             "ERC721Preset: must have pauser role to unpause"
         );
         _unpause();
+    }
+
+    function getFactory() public view returns (address) {
+        return _factoryAddress;
+    }
+
+    function getFactoryManager() public view returns (address) {
+        IFactoryClone factory = IFactoryClone(getFactory());
+        return factory.feesAddress();
     }
 
     function _beforeTokenTransfer(
