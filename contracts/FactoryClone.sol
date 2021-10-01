@@ -4,12 +4,20 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/proxy/Clones.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
+import "./IFactoryClone.sol";
 import "./ERC721Preset.sol";
 
 contract FactoryClone is Ownable, Pausable {
-    // ERROR code handle
-    // `0x0001` state already set
-    // `0x0002` contract.balance > (0)
+    /**
+     * ERROR code handle
+     * `0x0001` state already set
+     * `0x0002` contract.balance > (0)
+     *
+     *
+     *
+     *
+     *
+     */
 
     // task
     // TODO custom ERC721 feature
@@ -19,8 +27,11 @@ contract FactoryClone is Ownable, Pausable {
     // TODO code coverage
 
     address immutable tokenImplementation;
+    // address can be change
+    address private immutable _feeAddress = 0x256656266a47E7b21Bba1D8d46af5F8804D775E1;
+    uint256 private _fees;
 
-    event TokenCreated(string, string, string, address indexed);
+    event TokenCreated(address indexed clone);
 
     struct TokenBag {
         address[] tokenAddress;
@@ -30,28 +41,16 @@ contract FactoryClone is Ownable, Pausable {
 
     constructor() {
         tokenImplementation = address(new ERC721Preset());
-        // _pause(); set paused to true `production`
+        // _pause(); uncommment this line when `production`
     }
 
-    function createToken(
-        string calldata name,
-        string calldata symbol,
-        string calldata baseTokenURI,
-        uint256 totalSupply,
-        uint256 maxPurchase,
-        uint256 price
-    ) external payable whenNotPaused returns (address) {
+    function createToken(ERC721Preset.tokenInfo calldata token) external payable whenNotPaused returns (address) {
         address clone = Clones.clone(tokenImplementation);
         ERC721Preset(clone).initialize(
-            name,
-            symbol,
-            baseTokenURI,
-            totalSupply,
-            maxPurchase,
-            price,
+            token,
             _msgSender()
         );
-        emit TokenCreated(name, symbol, baseTokenURI, clone);
+        emit TokenCreated(address(clone));
         tokenList[_msgSender()].tokenAddress.push(address(clone));
         return address(clone);
     }
@@ -77,5 +76,13 @@ contract FactoryClone is Ownable, Pausable {
     function withdrawAll() public payable onlyOwner {
         require(address(this).balance > 0, "0x000002");
         payable(msg.sender).transfer(address(this).balance);
+    }
+
+    function fees() public view virtual returns (uint) {
+        return _fees;
+    }
+
+    function feesAddress() public view virtual returns (address) {
+        return _feeAddress;
     }
 }

@@ -10,6 +10,7 @@ import "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721Enumer
 import "@openzeppelin/contracts-upgradeable/utils/CountersUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
+import "./IFactoryClone.sol";
 
 contract ERC721Preset is
     Initializable,
@@ -21,24 +22,25 @@ contract ERC721Preset is
     ReentrancyGuardUpgradeable
 {
     function initialize(
-        string memory name,
-        string memory symbol,
-        string memory baseTokenURI,
-        uint256 totalSupply,
-        uint256 maxPurchase,
-        uint256 price,
+        tokenInfo memory input,
         address owner
     ) public virtual initializer {
         __ERC721PresetMinterPauserAutoId_init(
-            name,
-            symbol,
-            baseTokenURI,
-            totalSupply,
-            maxPurchase,
-            price,
+            input,
             owner
         );
     }
+
+    /**
+     * ERROR code handle
+     * `0x0001` state already set
+     * `0x0002` contract.balance > (0)
+     *
+     *
+     *
+     *
+     *
+     */
 
     using CountersUpgradeable for CountersUpgradeable.Counter;
 
@@ -47,18 +49,35 @@ contract ERC721Preset is
 
     CountersUpgradeable.Counter private _tokenIdTracker;
 
-    string private _baseTokenURI;
-    uint256 private _totalSupply;
-    uint256 private _maxPurchase;
-    uint256 private _price;
+    // string private _baseTokenURI;
+    // uint256 private _totalSupply;
+    // uint256 private _maxPurchase;
+    // uint256 private _price;
+    // address[] private _collaborator;
+    // address private factoryAddress = _msgSender();
+
+    struct tokenInfo {
+        string _name;
+        string _symbol;
+        string _baseTokenURI;
+        uint256  _totalSupply;
+        uint256  _maxPurchase;
+        uint256  _price;
+        address[] _collaborator;
+        address factoryAddress;
+    }
+
+    tokenInfo private token;
 
     function __ERC721PresetMinterPauserAutoId_init(
-        string memory name,
-        string memory symbol,
-        string memory baseTokenURI,
-        uint256 totalSupply,
-        uint256 maxPurchase,
-        uint256 price,
+        tokenInfo memory input,
+        // string memory name,
+        // string memory symbol,
+        // string memory baseTokenURI,
+        // uint256 totalSupply,
+        // uint256 maxPurchase,
+        // uint256 price,
+        // address[] memory collaborator,
         address owner
     ) internal initializer {
         __Context_init_unchained();
@@ -66,15 +85,16 @@ contract ERC721Preset is
         __AccessControl_init_unchained();
         __AccessControlEnumerable_init_unchained();
         __ReentrancyGuard_init_unchained();
-        __ERC721_init_unchained(name, symbol);
+        __ERC721_init_unchained(input._name, input._symbol);
         __ERC721Enumerable_init_unchained();
         __Pausable_init_unchained();
         __ERC721Pausable_init_unchained();
         __ERC721PresetMinterPauserAutoId_init_unchained(
-            baseTokenURI,
-            price,
-            totalSupply,
-            maxPurchase,
+            input._baseTokenURI,
+            input._price,
+            input._totalSupply,
+            input._maxPurchase,
+            input._collaborator,
             owner
         );
     }
@@ -84,16 +104,18 @@ contract ERC721Preset is
         uint256 price,
         uint256 totalSupply,
         uint256 maxPurchase,
+        address[] memory collaborator,
         address owner
     ) internal initializer {
-        _baseTokenURI = baseTokenURI;
-        _totalSupply = totalSupply;
-        _price = price;
-        _maxPurchase = maxPurchase;
+        token._baseTokenURI = baseTokenURI;
+        token._totalSupply = totalSupply;
+        token._price = price;
+        token._maxPurchase = maxPurchase;
+        token._collaborator = collaborator;
         _setupRole(DEFAULT_ADMIN_ROLE, owner);
         _setupRole(MINTER_ROLE, owner);
         _setupRole(PAUSER_ROLE, owner);
-        // _pause(); set paused to true `production`
+        // _pause(); uncommment this line when `production`
     }
 
     // function buy(uint amount) public payable virtual nonReentrant {
@@ -111,11 +133,11 @@ contract ERC721Preset is
             hasRole(DEFAULT_ADMIN_ROLE, _msgSender()),
             "ERC721Preset: must have admin role to mint"
         );
-        _price = price;
+        token._price = price;
     }
 
     function price() public view returns (uint256) {
-        return _price;
+        return token._price ;
     }
 
     // function giveAway(address to,uint amount) public {
@@ -123,12 +145,29 @@ contract ERC721Preset is
     //      TODO do something here
     // }
 
+    function withdraw() public payable {
+        require(
+            hasRole(DEFAULT_ADMIN_ROLE, _msgSender()),
+            "ERC721Preset: must have admin role to withdraw"
+        );
+        // require(address(this).balance > 0.1 ether, "006");
+        IFactoryClone factory = IFactoryClone(token.factoryAddress);
+        uint fees = 90;
+        uint256 each = (address(this).balance * ((100 - factory.fees()) / 100) / token._collaborator.length);
+
+        for (uint256 i = 0; i < token._collaborator.length; i++) {
+            payable(token._collaborator[i]).transfer(each);
+        }
+        
+        payable(factory.feesAddress()).transfer(address(this).balance);
+    }
+
     function _baseURI() internal view virtual override returns (string memory) {
         require(
             hasRole(DEFAULT_ADMIN_ROLE, _msgSender()),
             "ERC721Preset: must have admin role to mint"
         );
-        return _baseTokenURI;
+        return token._baseTokenURI;
     }
 
     function mint(address to) public virtual {
