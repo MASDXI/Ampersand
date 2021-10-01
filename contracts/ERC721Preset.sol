@@ -33,9 +33,15 @@ contract ERC721Preset is
      * ERROR code handle
      * `0x0001` state already set
      * `0x0002` contract.balance > (0)
-     *
-     *
-     *
+     * 1 ERC721Preset: price
+     * 2 ERC721Preset: max limit purchase
+     * 3 ERC721Preset: max totalSupply limit
+     * 4 ERC721Preset: must have admin role to withdraw
+     * 5 ERC721Preset: must have admin role to set price
+     * 6 ERC721Preset: must have minter role to mint
+     * 7 ERC721Preset: must have minter role to mintMulti
+     * 8 ERC721Preset: must have pauser role to pause
+     * 9 ERC721Preset: must have pauser role to unpause
      *
      *
      */
@@ -110,9 +116,9 @@ contract ERC721Preset is
         nonReentrant
         whenNotPaused
     {
-        require(totalSupply() + amount <= token._totalSupply, "002");
-        require(amount <= token._maxPurchase, "004");
-        require(msg.value >= getPrice() * amount, "005");
+        require(totalSupply() + amount <= token._totalSupply, "1");
+        require(amount <= token._maxPurchase, "2");
+        require(msg.value >= getPrice() * amount, "3");
 
         for (uint256 i = 1; i <= amount; i++) {
             _mint(msg.sender, totalSupply() + i);
@@ -120,10 +126,7 @@ contract ERC721Preset is
     }
 
     function setPrice(uint256 newPrice) public {
-        require(
-            hasRole(DEFAULT_ADMIN_ROLE, _msgSender()),
-            "ERC721Preset: must have admin role to mint"
-        );
+        require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "5");
         token._price = newPrice;
     }
 
@@ -132,10 +135,7 @@ contract ERC721Preset is
     }
 
     function withdraw() public payable {
-        require(
-            hasRole(DEFAULT_ADMIN_ROLE, _msgSender()),
-            "ERC721Preset: must have admin role to withdraw"
-        );
+        require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "4");
         // require(address(this).balance > 0.1 ether, "006");
         IFactoryClone factory = IFactoryClone(_factoryAddress);
         uint256 each = ((address(this).balance *
@@ -149,46 +149,30 @@ contract ERC721Preset is
     }
 
     function _baseURI() internal view virtual override returns (string memory) {
-        require(
-            hasRole(DEFAULT_ADMIN_ROLE, _msgSender()),
-            "ERC721Preset: must have admin role to mint"
-        );
         return token._baseTokenURI;
     }
 
     function mint(address to) public virtual {
-        require(
-            hasRole(MINTER_ROLE, _msgSender()),
-            "ERC721Preset: must have minter role to mint"
-        );
+        require(hasRole(MINTER_ROLE, _msgSender()), "6");
         _mint(to, _tokenIdTracker.current());
         _tokenIdTracker.increment();
     }
 
     function mintMulti(address to, uint256 amount) public {
-        require(
-            hasRole(MINTER_ROLE, _msgSender()),
-            "ERC721Preset: must have minter role to mintMulti"
-        );
-        require(totalSupply() + amount <= token._totalSupply, "002");
+        require(hasRole(MINTER_ROLE, _msgSender()), "7");
+        require(totalSupply() + amount <= token._totalSupply, "1");
         for (uint256 i = 1; i <= amount; i++) {
             _mint(to, totalSupply() + i);
         }
     }
 
     function pause() public virtual {
-        require(
-            hasRole(PAUSER_ROLE, _msgSender()),
-            "ERC721Preset: must have pauser role to pause"
-        );
+        require(hasRole(PAUSER_ROLE, _msgSender()), "8");
         _pause();
     }
 
     function unpause() public virtual {
-        require(
-            hasRole(PAUSER_ROLE, _msgSender()),
-            "ERC721Preset: must have pauser role to unpause"
-        );
+        require(hasRole(PAUSER_ROLE, _msgSender()), "9");
         _unpause();
     }
 
