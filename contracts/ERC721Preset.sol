@@ -31,8 +31,6 @@ contract ERC721Preset is
 
     /**
      * ERROR code handle
-     * `0x0001` state already set
-     * `0x0002` contract.balance > (0)
      * 1 ERC721Preset: price
      * 2 ERC721Preset: max limit purchase
      * 3 ERC721Preset: max totalSupply limit
@@ -42,8 +40,6 @@ contract ERC721Preset is
      * 7 ERC721Preset: must have minter role to mintMulti
      * 8 ERC721Preset: must have pauser role to pause
      * 9 ERC721Preset: must have pauser role to unpause
-     *
-     *
      */
 
     using CountersUpgradeable for CountersUpgradeable.Counter;
@@ -80,28 +76,16 @@ contract ERC721Preset is
         __Pausable_init_unchained();
         __ERC721Pausable_init_unchained();
         __ERC721PresetMinterPauserAutoId_init_unchained(
-            input._baseTokenURI,
-            input._price,
-            input._totalSupply,
-            input._maxPurchase,
-            input._collaborator,
+            input,
             owner
         );
     }
 
     function __ERC721PresetMinterPauserAutoId_init_unchained(
-        string memory baseTokenURI,
-        uint256 price,
-        uint256 totalSupply,
-        uint256 maxPurchase,
-        address[] memory collaborator,
+        tokenInfo memory input,
         address owner
     ) internal initializer {
-        token._baseTokenURI = baseTokenURI;
-        token._totalSupply = totalSupply;
-        token._price = price;
-        token._maxPurchase = maxPurchase;
-        token._collaborator = collaborator;
+        token = input;
         _factoryAddress = _msgSender();
         _setupRole(DEFAULT_ADMIN_ROLE, owner);
         _setupRole(MINTER_ROLE, owner);

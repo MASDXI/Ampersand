@@ -10,8 +10,6 @@ import "./ERC721Preset.sol";
 contract FactoryClone is Ownable, Pausable, IFactoryClone {
     /**
      * ERROR code handle
-     * `0x0001` state already set
-     * `0x0002` contract.balance > (0)
      *
      *
      *
