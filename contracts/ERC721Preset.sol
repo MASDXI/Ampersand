@@ -138,7 +138,6 @@ contract ERC721Preset is
         );
         // require(address(this).balance > 0.1 ether, "006");
         IFactoryClone factory = IFactoryClone(token.factoryAddress);
-        uint fees = 90;
         uint256 each = (address(this).balance * ((100 - factory.fees()) / 100) / token._collaborator.length);
 
         for (uint256 i = 0; i < token._collaborator.length; i++) {

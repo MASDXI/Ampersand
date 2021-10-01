@@ -16,6 +16,6 @@ interface IFactoryClone {
     /**
      * @dev Emitted when set new createdToken fees
      */
-    event FeesSet(uint amount);
+    event FeesUpdated(uint amount);
 
 }

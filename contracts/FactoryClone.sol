@@ -29,6 +29,7 @@ contract FactoryClone is Ownable, Pausable, IFactoryClone {
     address immutable _tokenImplementation;
     address private _feesAddres;
     uint256 private _fees;
+    uint256 private _createPrice;
 
     struct TokenBag {
         address[] tokenAddress;
@@ -45,7 +46,10 @@ contract FactoryClone is Ownable, Pausable, IFactoryClone {
         // _pause(); // uncommment this line when `production`
     }
 
-    function createToken(ERC721Preset.tokenInfo calldata token) external payable whenNotPaused returns (address) {
+    function createToken(
+        ERC721Preset.tokenInfo calldata token
+    ) external payable whenNotPaused returns (address) {
+        require(msg.value >= createPrice(), "002");
         address clone = Clones.clone(_tokenImplementation);
         ERC721Preset(clone).initialize(
             token,
@@ -78,16 +82,30 @@ contract FactoryClone is Ownable, Pausable, IFactoryClone {
         payable(msg.sender).transfer(address(this).balance);
     }
 
-    function setFees(uint price) public onlyOwner {
-        _fees = price;
-        emit FeesSet(price);
-    }
-
     function fees() public view override virtual returns (uint) {
         return _fees;
+    }
+
+    function setFees(uint price) public onlyOwner {
+        _fees = price;
+        emit FeesUpdated(price);
+    }
+
+    function setFeesAddress(address to) public onlyOwner {
+        _feesAddres = to;
     }
 
     function feesAddress() public view override virtual returns (address) {
         return _feesAddres;
     }
+
+    function createPrice() public view returns (uint256) {
+        return _createPrice;
+    }
+
+    function setCreatePrice(uint256 price) public onlyOwner {
+        _createPrice = price;
+        //emit PriceUpdated(price);
+    }
+
 }
