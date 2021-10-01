@@ -49,13 +49,6 @@ contract ERC721Preset is
 
     CountersUpgradeable.Counter private _tokenIdTracker;
 
-    // string private _baseTokenURI;
-    // uint256 private _totalSupply;
-    // uint256 private _maxPurchase;
-    // uint256 private _price;
-    // address[] private _collaborator;
-    // address private factoryAddress = _msgSender();
-
     struct tokenInfo {
         string _name;
         string _symbol;
@@ -71,13 +64,6 @@ contract ERC721Preset is
 
     function __ERC721PresetMinterPauserAutoId_init(
         tokenInfo memory input,
-        // string memory name,
-        // string memory symbol,
-        // string memory baseTokenURI,
-        // uint256 totalSupply,
-        // uint256 maxPurchase,
-        // uint256 price,
-        // address[] memory collaborator,
         address owner
     ) internal initializer {
         __Context_init_unchained();

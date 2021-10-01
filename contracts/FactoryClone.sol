@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 import "./IFactoryClone.sol";
 import "./ERC721Preset.sol";
 
-contract FactoryClone is Ownable, Pausable {
+contract FactoryClone is Ownable, Pausable, IFactoryClone {
     /**
      * ERROR code handle
      * `0x0001` state already set
@@ -20,18 +20,15 @@ contract FactoryClone is Ownable, Pausable {
      */
 
     // task
-    // TODO custom ERC721 feature
-    // TODO adjust optimizer low runs
+    // DOING custom ERC721 feature
+    // DOING adjust optimizer low runs
     // TODO unit-testing factory
     // TODO unit-testing erc721
     // TODO code coverage
 
-    address immutable tokenImplementation;
-    // address can be change
-    address private immutable _feeAddress = 0x256656266a47E7b21Bba1D8d46af5F8804D775E1;
+    address immutable _tokenImplementation;
+    address private _feesAddres;
     uint256 private _fees;
-
-    event TokenCreated(address indexed clone);
 
     struct TokenBag {
         address[] tokenAddress;
@@ -40,12 +37,16 @@ contract FactoryClone is Ownable, Pausable {
     mapping(address => TokenBag) tokenList;
 
     constructor() {
-        tokenImplementation = address(new ERC721Preset());
-        // _pause(); uncommment this line when `production`
+        _tokenImplementation = address(new ERC721Preset());
+        _feesAddres = _msgSender();
+        _fees = 0.001 ether;
+        // _fees = 
+        // _feeAddress = 0x<YOUR_ADDRESS>; // uncommment this line when `production`
+        // _pause(); // uncommment this line when `production`
     }
 
     function createToken(ERC721Preset.tokenInfo calldata token) external payable whenNotPaused returns (address) {
-        address clone = Clones.clone(tokenImplementation);
+        address clone = Clones.clone(_tokenImplementation);
         ERC721Preset(clone).initialize(
             token,
             _msgSender()
@@ -64,13 +65,12 @@ contract FactoryClone is Ownable, Pausable {
         return tokenList[_address].tokenAddress;
     }
 
-    function setPaused(bool _state) public onlyOwner {
-        require(paused() != _state, "0x000001");
-        if (_state == true) {
-            _pause();
-        } else {
-            _unpause();
-        }
+    function pause() public virtual onlyOwner {
+        _pause();
+    }
+
+    function unpause() public virtual onlyOwner {
+        _unpause();
     }
 
     function withdrawAll() public payable onlyOwner {
@@ -78,11 +78,16 @@ contract FactoryClone is Ownable, Pausable {
         payable(msg.sender).transfer(address(this).balance);
     }
 
-    function fees() public view virtual returns (uint) {
+    function setFees(uint price) public onlyOwner {
+        _fees = price;
+        emit FeesSet(price);
+    }
+
+    function fees() public view override virtual returns (uint) {
         return _fees;
     }
 
-    function feesAddress() public view virtual returns (address) {
-        return _feeAddress;
+    function feesAddress() public view override virtual returns (address) {
+        return _feesAddres;
     }
 }
