@@ -48,7 +48,12 @@ contract FactoryClone is Ownable, Pausable, IFactoryClone {
         require(msg.value >= createPrice(), "002");
         address clone = Clones.clone(_tokenImplementation);
         ERC721Preset(clone).initialize(token, _msgSender());
-        emit TokenCreated(address(clone));
+        emit TokenCreated(
+            token._name,
+            token._symbol,
+            token._baseTokenURI,
+            address(clone)
+        );
         tokenList[_msgSender()].tokenAddress.push(address(clone));
         return address(clone);
     }

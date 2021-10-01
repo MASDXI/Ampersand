@@ -103,9 +103,15 @@ contract ERC721Preset is
         // _pause(); uncommment this line when `production`
     }
 
-    function buy(uint amount) public payable virtual nonReentrant whenNotPaused {
+    function buy(uint256 amount)
+        public
+        payable
+        virtual
+        nonReentrant
+        whenNotPaused
+    {
         require(totalSupply() + amount <= token._totalSupply, "002");
-        require(amount <= token._maxPurchase , "004");
+        require(amount <= token._maxPurchase, "004");
         require(msg.value >= getPrice() * amount, "005");
 
         for (uint256 i = 1; i <= amount; i++) {
@@ -124,11 +130,6 @@ contract ERC721Preset is
     function getPrice() public view returns (uint256) {
         return token._price;
     }
-
-    // function giveAway(address to,uint amount) public {
-    //      require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()),"ERC721Preset: must have admin role to mint");
-    //      TODO do something here
-    // }
 
     function withdraw() public payable {
         require(

@@ -6,7 +6,12 @@ interface IFactoryClone {
 
     function feesAddress() external view returns (address);
 
-    event TokenCreated(address indexed clone);
+    event TokenCreated(
+        string name,
+        string symbol,
+        string baseTokenURI,
+        address indexed
+    );
     event FeesAddressChanged(address indexed to);
     event FeesUpdated(uint256 amount);
     event createPriceUpdated(uint256 amount);
