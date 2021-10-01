@@ -120,7 +120,7 @@ contract ERC721Preset is
 
     function withdraw() public payable {
         require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "4");
-        // require(address(this).balance > 0.1 ether, "006");
+        // require(address(this).balance > 10000 gwei, "006"); // uncomment this line when `production`
         IFactoryClone factory = IFactoryClone(_factoryAddress);
         uint256 each = ((address(this).balance *
             ((100 - factory.fees()) / 100)) / token._collaborator.length);
