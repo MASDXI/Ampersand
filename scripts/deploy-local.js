@@ -13,9 +13,9 @@ async function main() {
   );
   const createToken = await facy.createToken(
     [
-      "name",
-      "symbol",
-      "url",
+      "nft_name",
+      "nft_symbol",
+      "nft_uri",
       10000,
       20,
       1,
@@ -36,9 +36,16 @@ async function main() {
   const checkName = await instance.name();
   console.log("ERC721.name:", checkName);
   const getFactory = await instance.getFactory();
-  console.log(getFactory);
+  console.log("getFactory:", getFactory);
   const getFactoryManger = await instance.getFactoryManager();
-  console.log(getFactoryManger);
+  console.log("getFactoryManger:", getFactoryManger);
+
+  await instance.mint(accounts[1].address);
+  const getTokenID = await instance.tokenByIndex(0);
+  const getBalance = await instance.ownerOf(getTokenID);
+  console.log("mint token 0 to:", accounts[1].address)
+  console.log("ownerOf token 0:", getBalance);
+
 }
 
 main()
