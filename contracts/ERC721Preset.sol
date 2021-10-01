@@ -21,14 +21,12 @@ contract ERC721Preset is
     ERC721PausableUpgradeable,
     ReentrancyGuardUpgradeable
 {
-    function initialize(
-        tokenInfo memory input,
-        address owner
-    ) public virtual initializer {
-        __ERC721PresetMinterPauserAutoId_init(
-            input,
-            owner
-        );
+    function initialize(tokenInfo memory input, address owner)
+        public
+        virtual
+        initializer
+    {
+        __ERC721PresetMinterPauserAutoId_init(input, owner);
     }
 
     /**
@@ -53,9 +51,9 @@ contract ERC721Preset is
         string _name;
         string _symbol;
         string _baseTokenURI;
-        uint256  _totalSupply;
-        uint256  _maxPurchase;
-        uint256  _price;
+        uint256 _totalSupply;
+        uint256 _maxPurchase;
+        uint256 _price;
         address[] _collaborator;
         address factoryAddress;
     }
@@ -104,26 +102,26 @@ contract ERC721Preset is
         // _pause(); uncommment this line when `production`
     }
 
-    // function buy(uint amount) public payable virtual nonReentrant {
-    //     require(!paused(),"");
-    //     require(totalSupply() + amount <= maxSupply, "002");
-    //     require(_msgSender() >= price() * num, "005");
-    //     for (uint256 i = 1; i <= amount; i++) {
-    //         TODO do something here
-    //         _mint(_msgSender(), supply + i);
-    //     }
-    // }
+    function buy(uint amount) public payable virtual nonReentrant whenNotPaused {
+        require(totalSupply() + amount <= token._totalSupply, "002");
+        require(amount <= token._maxPurchase , "004");
+        require(msg.value >= getPrice() * amount, "005");
 
-    function setPrice(uint256 price) public {
+        for (uint256 i = 1; i <= amount; i++) {
+            _mint(msg.sender, totalSupply() + i);
+        }
+    }
+
+    function setPrice(uint256 newPrice) public {
         require(
             hasRole(DEFAULT_ADMIN_ROLE, _msgSender()),
             "ERC721Preset: must have admin role to mint"
         );
-        token._price = price;
+        token._price = newPrice;
     }
 
-    function price() public view returns (uint256) {
-        return token._price ;
+    function getPrice() public view returns (uint256) {
+        return token._price;
     }
 
     // function giveAway(address to,uint amount) public {
@@ -138,12 +136,13 @@ contract ERC721Preset is
         );
         // require(address(this).balance > 0.1 ether, "006");
         IFactoryClone factory = IFactoryClone(token.factoryAddress);
-        uint256 each = (address(this).balance * ((100 - factory.fees()) / 100) / token._collaborator.length);
+        uint256 each = ((address(this).balance *
+            ((100 - factory.fees()) / 100)) / token._collaborator.length);
 
         for (uint256 i = 0; i < token._collaborator.length; i++) {
             payable(token._collaborator[i]).transfer(each);
         }
-        
+
         payable(factory.feesAddress()).transfer(address(this).balance);
     }
 
@@ -162,6 +161,17 @@ contract ERC721Preset is
         );
         _mint(to, _tokenIdTracker.current());
         _tokenIdTracker.increment();
+    }
+
+    function mintMulti(address to, uint256 amount) public {
+        require(
+            hasRole(MINTER_ROLE, _msgSender()),
+            "ERC721Preset: must have minter role to mintMulti"
+        );
+        require(totalSupply() + amount <= token._totalSupply, "002");
+        for (uint256 i = 1; i <= amount; i++) {
+            _mint(to, totalSupply() + i);
+        }
     }
 
     function pause() public virtual {
