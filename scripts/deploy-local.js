@@ -43,9 +43,8 @@ async function main() {
   await instance.mint(accounts[1].address);
   const getTokenID = await instance.tokenByIndex(0);
   const getBalance = await instance.ownerOf(getTokenID);
-  console.log("mint token 0 to:", accounts[1].address)
+  console.log("mint token 0 to:", accounts[1].address);
   console.log("ownerOf token 0:", getBalance);
-
 }
 
 main()

@@ -12,6 +12,16 @@ import "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
 import "./IFactoryClone.sol";
 
+//  .d8888b.
+// d88P  "88b
+// Y88b. d88P
+//  "Y8888P"
+// .d88P88K.d88P
+// 888"  Y888P"
+// Y88b .d8888b
+//  "Y8888P" Y88b
+// ａｍｐｅｒｓａｎｄ
+
 contract ERC721Preset is
     Initializable,
     ContextUpgradeable,
@@ -21,14 +31,6 @@ contract ERC721Preset is
     ERC721PausableUpgradeable,
     ReentrancyGuardUpgradeable
 {
-    function initialize(tokenInfo memory input, address owner)
-        public
-        virtual
-        initializer
-    {
-        __ERC721PresetMinterPauserAutoId_init(input, owner);
-    }
-
     /**
      * ERROR code handle
      * 1 ERC721Preset: price
@@ -41,6 +43,14 @@ contract ERC721Preset is
      * 8 ERC721Preset: must have pauser role to pause
      * 9 ERC721Preset: must have pauser role to unpause
      */
+
+    function initialize(tokenInfo memory input, address owner)
+        public
+        virtual
+        initializer
+    {
+        __ERC721PresetMinterPauserAutoId_init(input, owner);
+    }
 
     using CountersUpgradeable for CountersUpgradeable.Counter;
 
@@ -75,10 +85,7 @@ contract ERC721Preset is
         __ERC721Enumerable_init_unchained();
         __Pausable_init_unchained();
         __ERC721Pausable_init_unchained();
-        __ERC721PresetMinterPauserAutoId_init_unchained(
-            input,
-            owner
-        );
+        __ERC721PresetMinterPauserAutoId_init_unchained(input, owner);
     }
 
     function __ERC721PresetMinterPauserAutoId_init_unchained(

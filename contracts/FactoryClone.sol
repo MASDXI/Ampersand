@@ -7,6 +7,16 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 import "./IFactoryClone.sol";
 import "./ERC721Preset.sol";
 
+//  .d8888b.
+// d88P  "88b
+// Y88b. d88P
+//  "Y8888P"
+// .d88P88K.d88P
+// 888"  Y888P"
+// Y88b .d8888b
+//  "Y8888P" Y88b
+// ａｍｐｅｒｓａｎｄ
+
 contract FactoryClone is Ownable, Pausable, IFactoryClone {
     /**
      * ERROR code handle
