@@ -11,7 +11,7 @@ import "./ERC721Preset.sol";
 // d88P  "88b
 // Y88b. d88P
 //  "Y8888P"
-// .d88P88K.d88P
+// .d88P88K.dNFT
 // 888"  Y888P"
 // Y88b .d8888b
 //  "Y8888P" Y88b
