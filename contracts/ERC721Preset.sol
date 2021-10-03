@@ -33,15 +33,7 @@ contract ERC721Preset is
 {
     /**
      * ERROR code handle
-     * 1 ERC721Preset: price
-     * 2 ERC721Preset: max limit purchase
-     * 3 ERC721Preset: max totalSupply limit
-     * 4 ERC721Preset: must have admin role to withdraw
-     * 5 ERC721Preset: must have admin role to set price
-     * 6 ERC721Preset: must have minter role to mint
-     * 7 ERC721Preset: must have minter role to mintMulti
-     * 8 ERC721Preset: must have pauser role to pause
-     * 9 ERC721Preset: must have pauser role to unpause
+     * CRC32 encode
      */
 
     function initialize(tokenInfo memory input, address owner)

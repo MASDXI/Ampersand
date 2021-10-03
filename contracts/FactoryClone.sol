@@ -20,11 +20,7 @@ import "./ERC721Preset.sol";
 contract FactoryClone is Ownable, Pausable, IFactoryClone {
     /**
      * ERROR code handle
-     *
-     *
-     *
-     *
-     *
+     * CRC32 encode
      */
 
     address immutable _tokenImplementation;
