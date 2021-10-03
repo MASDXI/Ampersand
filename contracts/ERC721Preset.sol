@@ -109,6 +109,10 @@ contract ERC721Preset is
         }
     }
 
+    function maxPurchase() public view returns (uint256) {
+        return token._maxPurchase;
+    }
+
     function setPrice(uint256 newPrice) public {
         require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "5");
         token._price = newPrice;
