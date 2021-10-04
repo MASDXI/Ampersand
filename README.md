@@ -1,4 +1,4 @@
-# Advanced Sample Hardhat Project
+# Ampersand
 
 ## Required Software
 
@@ -23,6 +23,7 @@ Project directory structure
 .
 ├── contracts
 │   ├── ERC721Preset.sol
+│   ├── IFactoryClone.sol
 │   └── FactoryClone.sol
 ├── docs
 │   └── ERC20.md
@@ -33,9 +34,11 @@ Project directory structure
 ├── README.md
 ├── scripts
 │   ├── deploy-local.sol
-│   └── deploy-ropsten.js
+│   ├── deploy-testnet.sol
+│   └── deploy-mainet.js
 ├── test
 │   ├── erc721preset.test.js
+│   ├── intregrate.test.js
 │   └── factoryclone.test.js
 └── yarn.lock
 
