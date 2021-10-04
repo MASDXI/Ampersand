@@ -11,7 +11,7 @@ If you don't have a yarn. Install yarn by the command below.
 npm install --global yarn
 ```
 
-And then.
+for installing dependencies with yarn using command.
 
 ```
 yarn install
@@ -19,7 +19,7 @@ yarn install
 
 Project directory structure
 
-```shell
+```
 .
 ├── contracts
 │   ├── ERC721Preset.sol
@@ -63,9 +63,12 @@ yarn test-rpc
 # deployment
 yarn deploy:local
 yarn deploy:ropsten
+yarn deploy:rinkeby
 yarn deploy:mainnet
 # verify
 yarn verify:ropsten
+yarn verify:rinkeby
+yarn verify:mainnet
 # format
 yarn eslint
 yarn eslint-fix
@@ -88,9 +91,12 @@ yarn deploy
 Then, copy the deployment address and paste it in to replace `DEPLOYED_CONTRACT_ADDRESS` in this command:
 
 ```shell
-yarn verify DEPLOYED_CONTRACT_ADDRESS CONS_ARGS1 CONS_ARGS2
+# you need to verify FactoryClone and ERC721Preset
+yarn verify:mainet DEPLOYED_CONTRACT_ADDRESS
 ```
 
 # Documents
 
-- [ERC20](./docs/ERC20)
+- [FactoryClone](./docs/FactoryClone.md)
+- [FactoryClone](./docs/IFactoryClone.md)
+- [ERC721Preset](./docs/ERC721Preset.md)
