@@ -49,13 +49,11 @@ contract ERC721Preset is
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
     bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
 
-    CountersUpgradeable.Counter private _tokenIdTracker;
-
     struct tokenInfo {
         string _name;
         string _symbol;
         string _baseTokenURI;
-        uint256 _totalSupply;
+        uint256 _maxSupply;
         uint256 _maxPurchase;
         uint256 _price;
         address[] _collaborator;
@@ -99,13 +97,16 @@ contract ERC721Preset is
         nonReentrant
         whenNotPaused
     {
-        require(totalSupply() + amount <= token._totalSupply, "1");
-        require(amount <= token._maxPurchase, "2");
-        require(msg.value >= getPrice() * amount, "3");
-
+        require(totalSupply() + amount <= maxSupply(), "1");
+        require(amount <= maxPurchase(), "2");
+        require(msg.value >= (getPrice() * amount), "3");
         for (uint256 i = 1; i <= amount; i++) {
             _mint(msg.sender, totalSupply() + i);
         }
+    }
+    
+    function maxSupply() public view returns (uint256) {
+        return token._maxSupply;
     }
 
     function maxPurchase() public view returns (uint256) {
@@ -141,13 +142,13 @@ contract ERC721Preset is
 
     function mint(address to) public virtual {
         require(hasRole(MINTER_ROLE, _msgSender()), "6");
-        _mint(to, _tokenIdTracker.current());
-        _tokenIdTracker.increment();
+        require(totalSupply() + 1 <= maxSupply(), "1");
+        _mint(to, totalSupply() + 1);
     }
 
     function mintMulti(address to, uint256 amount) public {
         require(hasRole(MINTER_ROLE, _msgSender()), "7");
-        require(totalSupply() + amount <= token._totalSupply, "1");
+        require(totalSupply() + amount <= maxSupply(), "1");
         for (uint256 i = 1; i <= amount; i++) {
             _mint(to, totalSupply() + i);
         }
