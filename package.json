@@ -4,26 +4,29 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "clean": "npx hardhat clean",
+    "clean": "npx hardhat clean && rm -rf cache coverage coverage.json",
     "compile": "npx hardhat compile",
     "coverage": "npx hardhat coverage --testfiles ./test",
-    "test:erc20:capped": "npx hardhat test ./test/erc20_capped.test.js",
-    "test:erc20:uncapped": "npx hardhat test ./test/erc20_unCapped.test.js",
     "test:erc721": "npx hardhat test ./test/erc721.test.js",
-    "test:erc1155": "npx hardhat test ./test/erc1155.test.js",
-    "test:factory": "npx hardhat test ./test/factory.test.js",
+    "test:factory": "npx hardhat test ./test/factoryclone.test.js",
     "test-rpc": "npx hardhat node",
-    "deploy:factory:local": "npx hardhat run scripts/deploy-factory.js --network localhost",
-    "deploy:factory:erc20:local": "npx hardhat run scripts/deploy-factory-with-token.js --network localhost",
-    "deploy:factory:ropsten": "npx hardhat run scripts/deploy-factory.js --network ropsten",
-    "deploy:factory:rinkeby": "npx hardhat run scripts/deploy-factory.js --network rinkeby",
-    "deploy-prod": "npx hardhat run scripts/deploy-factory.js --network production",
+    "deploy:local": "npx hardhat run scripts/deploy-local.js --network localhost",
+    "deploy:ropsten": "npx hardhat run scripts/deploy-ropsten.js --network ropsten",
+    "deploy:rinkeby": "npx hardhat run scripts/deploy-ropsten.js --network rinkeby",
+    "deploy:mainet": "npx hardhat run scripts/deploy-mainnet.js --network production",
     "verify:ropsten": "npx hardhat verify --network ropsten",
     "verify:rinkeby": "npx hardhat verify --network rinkeby",
-    "format": "npx prettier --write contracts/**/*.sol"
+    "verify:mainet": "npx hardhat verify --network mainet",
+    "eslint": "npx eslint '**/*.js'",
+    "eslint-fix": "npx eslint '**/*.js' --fix",
+    "prettier": "npx prettier '**/*.{json,sol,md}' --check",
+    "prettier-fix": "npx prettier '**/*.{json,sol,md}' --write",
+    "solhint": "npx solhint 'contracts/**/*.sol'",
+    "solhint-fix": "npx solhint 'contracts/**/*.sol' --fix"
   },
   "dependencies": {
-    "@openzeppelin/contracts": "^4.3.1"
+    "@openzeppelin/contracts": "^4.3.1",
+    "@openzeppelin/contracts-upgradeable": "^4.3.2"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.0",

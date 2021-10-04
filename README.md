@@ -2,48 +2,41 @@
 
 ## Required Software
 
--   Node Js [Download](https://nodejs.org/en/)
--   Git [Download](https://git-scm.com/)
+- Node Js [Download](https://nodejs.org/en/)
+- Git [Download](https://git-scm.com/)
 
 If you don't have a yarn. Install yarn by the command below.
-``` 
+
+```
 npm install --global yarn
-``` 
+```
 
 And then.
-``` 
+
+```
 yarn install
-``` 
+```
 
 Project directory structure
-``` shell
+
+```shell
 .
 ├── contracts
-│   ├── TokenERC1155.sol
-│   ├── TokenERC20.sol
-│   ├── TokenERC721.sol
-│   ├── TokenERC777.sol.develop
-│   └── TokenFactory.sol
-├── coverage.json
+│   ├── ERC721Preset.sol
+│   └── FactoryClone.sol
 ├── docs
-│   ├── ERC1155.md
-│   ├── ERC20.md
-│   ├── ERC721.md
-│   └── ERC777.md
+│   └── ERC20.md
 ├── hardhat.config.js
 ├── LICENSE
 ├── package.json
 ├── package-lock.json
 ├── README.md
 ├── scripts
-│   └── deploy.js
+│   ├── deploy-local.sol
+│   └── deploy-ropsten.js
 ├── test
-│   ├── erc1155.test.js
-│   ├── erc20_capped.test.js
-│   ├── erc20_unCapped.test.js
-│   ├── erc721.test.js
-│   ├── erc777.test.js
-│   ├── factory.test.js
+│   ├── erc721preset.test.js
+│   └── factoryclone.test.js
 └── yarn.lock
 
 ```
@@ -55,27 +48,28 @@ The project comes with a sample contract, a test for that contract, a sample scr
 Try running some of the following tasks: `yarn`
 
 ```shell
+# cleaning
 yarn clean
+# compile
 yarn compile
 yarn coverage
-yarn test:erc20:capped
-yarn test:erc20:uncapped
-yarn test:erc721
-yarn test:erc1155
+# testing
 yarn test:factory
+yarn test:erc721
 yarn test-rpc
-yarn deploy:factory:local
-yarn deploy:factory:erc20:local
-yarn deploy:factory:ropsten
-yarn deploy-prod
+# deployment
+yarn deploy:local
+yarn deploy:ropsten
+yarn deploy:mainnet
+# verify
 yarn verify:ropsten
-yarn REPORT_GAS=true npx hardhat test
-yarn npx eslint '**/*.js'
-yarn npx eslint '**/*.js' --fix
-yarn npx prettier '**/*.{json,sol,md}' --check
-yarn npx prettier '**/*.{json,sol,md}' --write
-yarn npx solhint 'contracts/**/*.sol'
-yarn npx solhint 'contracts/**/*.sol' --fix
+# format
+yarn eslint
+yarn eslint-fix
+yarn prettier
+yarn prettier-fix
+yarn solhint
+yarn solhint-fix
 ```
 
 # Etherscan verification
@@ -96,7 +90,4 @@ yarn verify DEPLOYED_CONTRACT_ADDRESS CONS_ARGS1 CONS_ARGS2
 
 # Documents
 
-- [ERC20](./docs/ERC20)  
-- [ERC721](./docs/ERC721)  
-- [ERC777](./docs/ERC777)  
-- [ERC1155](./docs/ERC1155)  
+- [ERC20](./docs/ERC20)
