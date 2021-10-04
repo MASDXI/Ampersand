@@ -21,6 +21,8 @@ contract FactoryClone is Ownable, Pausable, IFactoryClone {
     /**
      * ERROR code handle
      * CRC32 encode
+     * 736d4bef FactoryClone: price not correct
+     * 17854c4f ERC721Preset: require eth more than 0
      */
 
     address immutable _tokenImplementation;
@@ -49,7 +51,7 @@ contract FactoryClone is Ownable, Pausable, IFactoryClone {
         whenNotPaused
         returns (address)
     {
-        require(msg.value >= createPrice(), "002");
+        require(msg.value >= createPrice(), "736d4bef");
         address clone = Clones.clone(_tokenImplementation);
         ERC721Preset(clone).initialize(token, _msgSender());
         emit TokenCreated(
@@ -80,7 +82,7 @@ contract FactoryClone is Ownable, Pausable, IFactoryClone {
     }
 
     function withdrawAll() public payable onlyOwner {
-        require(address(this).balance > 0, "0x000002");
+        require(address(this).balance > 0, "17854c4f");
         payable(msg.sender).transfer(address(this).balance);
     }
 

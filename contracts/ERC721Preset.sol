@@ -34,6 +34,13 @@ contract ERC721Preset is
     /**
      * ERROR code handle
      * CRC32 encode
+     * a4fb704b ERC721Preset: require DEFAULT_ADMIN_ROLE role
+     * 24113153 ERC721Preset: require MINTER_ROLE role
+     * 500c80ca ERC721Preset: require PAUSER_ROLE role
+     * 9c7b6c43 ERC721Preset: exceeds maximum supply
+     * a4006875 ERC721Preset: exceeds maximum purchase per tx
+     * 3e2087fb ERC721Preset: price not correct
+     * afa07ab7 ERC721Preset: require eth more than 10000 gwei
      */
 
     function initialize(tokenInfo memory input, address owner)
@@ -97,9 +104,9 @@ contract ERC721Preset is
         nonReentrant
         whenNotPaused
     {
-        require(totalSupply() + amount <= maxSupply(), "1");
-        require(amount <= maxPurchase(), "2");
-        require(msg.value >= (getPrice() * amount), "3");
+        require(totalSupply() + amount <= maxSupply(), "19c7b6c43");
+        require(amount <= maxPurchase(), "a4006875");
+        require(msg.value >= (getPrice() * amount), "3e2087fb");
         for (uint256 i = 1; i <= amount; i++) {
             _mint(msg.sender, totalSupply() + i);
         }
@@ -114,7 +121,7 @@ contract ERC721Preset is
     }
 
     function setPrice(uint256 newPrice) public {
-        require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "5");
+        require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "a4fb704b");
         token._price = newPrice;
     }
 
@@ -123,8 +130,8 @@ contract ERC721Preset is
     }
 
     function withdraw() public payable {
-        require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "4");
-        // require(address(this).balance > 10000 gwei, "006"); // uncomment this line when `production`
+        require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "a4fb704b");
+        // require(address(this).balance > 10000 gwei, "afa07ab7"); // uncomment this line when `production`
         IFactoryClone factory = IFactoryClone(_factoryAddress);
         uint256 each = ((address(this).balance *
             ((100 - factory.fees()) / 100)) / token._collaborator.length);
@@ -141,26 +148,26 @@ contract ERC721Preset is
     }
 
     function mint(address to) public virtual {
-        require(hasRole(MINTER_ROLE, _msgSender()), "6");
-        require(totalSupply() + 1 <= maxSupply(), "1");
+        require(hasRole(MINTER_ROLE, _msgSender()), "24113153");
+        require(totalSupply() + 1 <= maxSupply(), "9c7b6c43");
         _mint(to, totalSupply() + 1);
     }
 
     function mintMulti(address to, uint256 amount) public {
-        require(hasRole(MINTER_ROLE, _msgSender()), "7");
-        require(totalSupply() + amount <= maxSupply(), "1");
+        require(hasRole(MINTER_ROLE, _msgSender()), "24113153");
+        require(totalSupply() + amount <= maxSupply(), "9c7b6c43");
         for (uint256 i = 1; i <= amount; i++) {
             _mint(to, totalSupply() + i);
         }
     }
 
     function pause() public virtual {
-        require(hasRole(PAUSER_ROLE, _msgSender()), "8");
+        require(hasRole(PAUSER_ROLE, _msgSender()), "500c80ca");
         _pause();
     }
 
     function unpause() public virtual {
-        require(hasRole(PAUSER_ROLE, _msgSender()), "9");
+        require(hasRole(PAUSER_ROLE, _msgSender()), "500c80ca");
         _unpause();
     }
 
