@@ -2,7 +2,8 @@
 
 ## Required Software
 
-- Node Js [Download](https://nodejs.org/en/)
+- Node JS [Download](https://nodejs.org/en/)
+- NVM (you can use it instead NodeJS) [Download](https://github.com/nvm-sh/nvm#installing-and-updating)
 - Git [Download](https://git-scm.com/)
 
 If you don't have a yarn. Install yarn by the command below.
