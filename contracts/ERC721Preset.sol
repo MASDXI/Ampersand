@@ -111,7 +111,7 @@ contract ERC721Preset is
             _mint(msg.sender, totalSupply() + i);
         }
     }
-    
+
     function maxSupply() public view returns (uint256) {
         return token._maxSupply;
     }

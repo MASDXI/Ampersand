@@ -26,9 +26,14 @@ contract FactoryClone is Ownable, Pausable, IFactoryClone {
      */
 
     address immutable _tokenImplementation;
-    address private _feesAddres;
-    uint256 private _fees;
-    uint256 private _createPrice;
+
+    struct FactoryInfo {
+        address _feesAddres;
+        uint256 _fees;
+        uint256 _createPrice;
+    }
+
+    FactoryInfo private factory;
 
     struct TokenBag {
         address[] tokenAddress;
@@ -38,8 +43,8 @@ contract FactoryClone is Ownable, Pausable, IFactoryClone {
 
     constructor() {
         _tokenImplementation = address(new ERC721Preset());
-        _feesAddres = _msgSender();
-        _fees = 0 ether;
+        factory._feesAddres = _msgSender();
+        factory._fees = 0 ether;
         // _fees = 0.001 ether // uncommment this line when `production`
         // _feeAddress = 0x<YOUR_ADDRESS>; // uncommment this line when `production`
         // _pause(); // uncommment this line when `production`
@@ -87,29 +92,29 @@ contract FactoryClone is Ownable, Pausable, IFactoryClone {
     }
 
     function fees() public view virtual override returns (uint256) {
-        return _fees;
+        return factory._fees;
     }
 
     function setFees(uint256 price) public onlyOwner {
-        _fees = price;
+        factory._fees = price;
         emit FeesUpdated(price);
     }
 
     function feesAddress() public view virtual override returns (address) {
-        return _feesAddres;
+        return factory._feesAddres;
     }
 
     function setFeesAddress(address to) public onlyOwner {
-        _feesAddres = to;
+        factory._feesAddres = to;
         emit FeesAddressChanged(to);
     }
 
     function createPrice() public view returns (uint256) {
-        return _createPrice;
+        return factory._createPrice;
     }
 
     function setCreatePrice(uint256 price) public onlyOwner {
-        _createPrice = price;
+        factory._createPrice = price;
         emit createPriceUpdated(price);
     }
 }

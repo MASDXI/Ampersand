@@ -5,8 +5,9 @@
 - Node JS [Download](https://nodejs.org/en/)
 - NVM (you can use it instead NodeJS) [Download](https://github.com/nvm-sh/nvm#installing-and-updating)
 - Git [Download](https://git-scm.com/)
-  
+
 clone repository
+
 ```
 git clone https://github.com/MASDXI/TokenFactory.git
 ```
