@@ -10,8 +10,8 @@
     "test:erc721": "npx hardhat test ./test/erc721preset.test.js",
     "test:factory": "npx hardhat test ./test/factoryclone.test.js",
     "test:intregrate": "npx hardhat test ./test/intregrate.test.js",
-    "test-rpc": "npx hardhat node",
-    "deploy:local": "npx hardhat run scripts/deploy-local.js --network localhost",
+    "test:rpc": "npx hardhat node",
+    "deploy:hardhat": "npx hardhat run scripts/deploy-local.js --network localhost",
     "deploy:ropsten": "npx hardhat run scripts/deploy-testnet.js --network ropsten",
     "deploy:rinkeby": "npx hardhat run scripts/deploy-testnet.js --network rinkeby",
     "deploy:mainet": "npx hardhat run scripts/deploy-mainnet.js --network production",
@@ -19,11 +19,11 @@
     "verify:rinkeby": "npx hardhat verify --network rinkeby",
     "verify:mainet": "npx hardhat verify --network mainet",
     "eslint": "npx eslint '**/*.js'",
-    "eslint-fix": "npx eslint '**/*.js' --fix",
+    "eslint:fix": "npx eslint '**/*.js' --fix",
     "prettier": "npx prettier '**/*.{json,sol,md}' --check",
-    "prettier-fix": "npx prettier '**/*.{json,sol,md}' --write",
+    "prettier:fix": "npx prettier '**/*.{json,sol,md}' --write",
     "solhint": "npx solhint 'contracts/**/*.sol'",
-    "solhint-fix": "npx solhint 'contracts/**/*.sol' --fix"
+    "solhint:fix": "npx solhint 'contracts/**/*.sol' --fix"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.3.1",

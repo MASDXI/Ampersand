@@ -8,35 +8,37 @@ Ampersand focusing to develop smart contract that robustness cheap and easy for 
 
 Ampersand provide user can create their own ERC721 Token without any single line of code with preset of functionality that's really needed with cheaper transaction fees.
 
-| Contract      |   Gas used |
-| :------------ | ---------: |
-| FactoryNaive  | ~3,119,849 |
-| FactoryClone  | ~3,710,122 |
-| ERC721Default | ~2,489,577 |
-| ERC721Naive   | ~3,376,344 |
-| ERC721Clone   |   ~697,796 |
+| Contract      |   Gas used | Transaction fee (ETH) |
+| :------------ | ---------: | --------------------: |
+| FactoryNaive  | ~3,119,849 |        ~0.1559925 ETH |
+| FactoryClone  | ~3,710,122 |        ~0.1855061 ETH |
+| ERC721Default | ~2,489,577 |        ~0.1244788 ETH |
+| ERC721Naive   | ~3,376,344 |        ~0.1688172 ETH |
+| ERC721Clone   |   ~697,796 |        ~0.0348898 ETH |
+
+##### \*\* gas price in table is 50 gwei
 
 ## Required Software
 
-- Node JS [Download](https://nodejs.org/en/)
-- NVM [Download](https://github.com/nvm-sh/nvm#installing-and-updating)
-- Git [Download](https://git-scm.com/)
+- node [Download](https://nodejs.org/en/)
+- nvm [Download](https://github.com/nvm-sh/nvm#installing-and-updating)
+- git [Download](https://git-scm.com/)
 
 clone repository
 
-```
+```shell
 git clone https://github.com/MASDXI/TokenFactory.git
 ```
 
 If you don't have a yarn. Install yarn by the command below.
 
-```
+```shell
 npm install --global yarn
 ```
 
 for installing dependencies with yarn using command.
 
-```
+```shell
 yarn install
 ```
 
@@ -72,7 +74,7 @@ The project comes with a sample contract, a test for that contract, a sample scr
 
 Try running some of the following tasks: `yarn`
 
-```shell
+```bash
 # cleaning
 yarn clean
 # compile
@@ -81,9 +83,9 @@ yarn coverage
 # testing
 yarn test:factory
 yarn test:erc721
-yarn test-rpc
+yarn test:rpc
 # deployment
-yarn deploy:local
+yarn deploy:hardhat
 yarn deploy:ropsten
 yarn deploy:rinkeby
 yarn deploy:mainnet
@@ -100,14 +102,16 @@ yarn solhint
 yarn solhint-fix
 ```
 
-# Etherscan verification
+## Etherscan verification
 
 To try out Etherscan verification, you first need to deploy a contract to an Ethereum network that's supported by Etherscan, such as Ropsten.
 
 In this project, copy the .env.template file to a file named .env, and then edit it to fill in the details. Enter your Etherscan API key, your Ropsten node URL (eg from Alchemy), and the private key of the account which will send the deployment transaction. With a valid .env file in place, first deploy your contract:
 
-```shell
-yarn deploy
+```bash
+# available on package.json script 
+# option local, ropsten, rinkeby, mainet
+yarn deploy:NETWORK
 ```
 
 Then, copy the deployment address and paste it in to replace `DEPLOYED_CONTRACT_ADDRESS` in this command:
@@ -117,7 +121,7 @@ Then, copy the deployment address and paste it in to replace `DEPLOYED_CONTRACT_
 yarn verify:mainet DEPLOYED_CONTRACT_ADDRESS
 ```
 
-# Documents
+## Documents
 
 - [FactoryClone](./docs/FactoryClone.md)
 - [IFactoryClone](./docs/IFactoryClone.md)
