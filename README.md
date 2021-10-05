@@ -64,7 +64,6 @@ Project directory structure
 │   ├── intregrate.test.js
 │   └── factoryclone.test.js
 └── yarn.lock
-
 ```
 
 This project demonstrates an advanced Hardhat use case, integrating other tools commonly used alongside Hardhat in the ecosystem.
