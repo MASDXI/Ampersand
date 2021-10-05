@@ -21,8 +21,8 @@ async function main() {
       1,
       [accounts[0].address, accounts[1].address, accounts[2].address],
     ],
-    // ["name","symbol,"uri",totalSupply,maxPurchase,price,["0xA...A","0xB...B","0xC...C"]]
-    // ["name","symbol,"uri",totalSupply,maxPurchase,price,[teamAddress]]
+    // ["name","symbol","uri",totalSupply,maxPurchase,price,["0xA...A","0xB...B","0xC...C"]]
+    // ["name","symbol","uri",totalSupply,maxPurchase,price,[teamAddress]]
     { value: hre.ethers.utils.parseEther("0") }
   );
   const { events } = await createToken.wait();
