@@ -116,7 +116,7 @@ yarn deploy:NETWORK
 
 Then, copy the deployment address and paste it in to replace `DEPLOYED_CONTRACT_ADDRESS` in this command:
 
-```shell
+```bash
 # you need to verify FactoryClone and ERC721Preset
 yarn verify:mainet DEPLOYED_CONTRACT_ADDRESS
 ```
