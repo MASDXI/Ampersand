@@ -1,9 +1,25 @@
-# Ampersand
+# 🔣 Ampersand
+
+### About Ampersand
+
+Ampersand focusing to develop smart contract that robustness cheap and easy for everyone!
+
+### ERC721
+
+Ampersand provide user can create their own ERC721 Token without any single line of code with preset of functionality that's really needed with cheaper transaction fees.
+
+| Contract      |   Gas used |
+| :------------ | ---------: |
+| FactoryNaive  | ~3,119,849 |
+| FactoryClone  | ~3,710,122 |
+| ERC721Default | ~2,489,577 |
+| ERC721Naive   | ~3,376,344 |
+| ERC721Clone   |   ~697,796 |
 
 ## Required Software
 
 - Node JS [Download](https://nodejs.org/en/)
-- NVM (you can use it instead NodeJS) [Download](https://github.com/nvm-sh/nvm#installing-and-updating)
+- NVM [Download](https://github.com/nvm-sh/nvm#installing-and-updating)
 - Git [Download](https://git-scm.com/)
 
 clone repository
@@ -105,5 +121,5 @@ yarn verify:mainet DEPLOYED_CONTRACT_ADDRESS
 # Documents
 
 - [FactoryClone](./docs/FactoryClone.md)
-- [FactoryClone](./docs/IFactoryClone.md)
+- [IFactoryClone](./docs/IFactoryClone.md)
 - [ERC721Preset](./docs/ERC721Preset.md)
