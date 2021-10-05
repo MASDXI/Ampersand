@@ -17,7 +17,7 @@ describe("ERC721Preset test", function() {
     await ERC721Preset.deployed();
   });
 
- it("createToken", async function() {
+  it("createToken", async function() {
     const result = await ERC721Preset.createToken(TOKEN,{ value: hre.ethers.utils.parseEther("0") });
     const { events } = await result.wait()
     const { address } = events.find(Boolean);
