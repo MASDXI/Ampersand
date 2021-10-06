@@ -14,9 +14,9 @@ Ampersand provide user can create their own ERC721 Token without any single line
 | FactoryClone  | ~3,710,122 |        ~0.1855061 ETH |
 | ERC721Default | ~2,489,577 |        ~0.1244788 ETH |
 | ERC721Naive   | ~3,376,344 |        ~0.1688172 ETH |
-| ERC721Clone   |   ~697,796 |        ~0.0348898 ETH |
-
-##### \*\* gas price in table is 50 gwei
+| ERC721  |   ~697,796 |        ~0.0348898 ETH |
+reduce around 70% of gas used
+##### \*\* gas price in table is 50 gwei 
 
 ## Required Software
 
