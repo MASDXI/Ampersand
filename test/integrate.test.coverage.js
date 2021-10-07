@@ -15,7 +15,7 @@ describe("FactoryClone test", function () {
     ERC721Preset = await ethers.getContractFactory("ERC721Preset");
     FactoryClone = await contract.deploy();
     accounts = await ethers.getSigners();
-    tokenInfo = ["name", "symbol", "uri", 10000, 20, 1, [accounts[0].address]];
+    tokenInfo = ["aaaaaaaaaa", "aaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", 10000, 20, 1, [accounts[0].address]];
     await FactoryClone.deployed();
   });
 

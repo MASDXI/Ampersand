@@ -12,7 +12,7 @@ describe("ERC721Preset test", function () {
     const contract = await ethers.getContractFactory("FactoryClone");
     ERC721Preset = await contract.deploy();
     accounts = await ethers.getSigners();
-    TOKEN = ["name", "symbol", "uri", 10000, 20, 1, [accounts[0].address]];
+    TOKEN = ["a", "a", "a", 1, 1, 1, [accounts[0].address]];
     await ERC721Preset.deployed();
   });
 
