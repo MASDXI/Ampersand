@@ -9,7 +9,7 @@
     "coverage": "npx hardhat coverage --testfiles ./test",
     "test:erc721": "npx hardhat test ./test/erc721preset.test.js",
     "test:factory": "npx hardhat test ./test/factoryclone.test.js",
-    "test:intregrate": "npx hardhat test ./test/intregrate.test.js",
+    "test:integrate": "npx hardhat test ./test/integrate.test.js",
     "test:rpc": "npx hardhat node",
     "deploy:hardhat": "npx hardhat run scripts/deploy-local.js --network localhost",
     "deploy:ropsten": "npx hardhat run scripts/deploy-testnet.js --network ropsten",
