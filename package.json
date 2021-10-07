@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "npx hardhat clean && rm -rf cache coverage coverage.json",
     "compile": "npx hardhat compile",
-    "coverage": "npx hardhat coverage --testfiles ./test",
+    "coverage": "npx hardhat coverage --testfiles ./test/integrate.test.coverage.js",
     "test:erc721": "npx hardhat test ./test/erc721preset.test.js",
     "test:factory": "npx hardhat test ./test/factoryclone.test.js",
     "test:integrate": "npx hardhat test ./test/integrate.test.js",
