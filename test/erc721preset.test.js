@@ -100,7 +100,7 @@ describe("ERC721Preset test", function () {
 
   it("buying 20 with accounts[0]", async function () {
     await ERC721Preset.initialize(TOKEN, accounts[0].address);
-    await ERC721Preset.buy(20, { value: hre.ethers.utils.parseEther("20") });
+    await ERC721Preset.buy(20, { value: hre.ethers.utils.parseEther("0.00000000000000002") });
     const array = [];
     for (i = 0; i < 20; i++) {
       array.push(await ERC721Preset.ownerOf(1));
