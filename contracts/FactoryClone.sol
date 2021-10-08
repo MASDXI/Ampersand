@@ -24,22 +24,20 @@ contract FactoryClone is Ownable, Pausable, IFactoryClone {
      * 736d4bef FactoryClone: price not correct
      * 17854c4f ERC721Preset: require eth more than 0
      */
-
+    mapping(address => TokenBag) tokenList;
     address immutable _tokenImplementation;
 
     struct FactoryInfo {
-        address _feesAddres;
         uint256 _fees;
         uint256 _createPrice;
+        address _feesAddres;
     }
-
-    FactoryInfo private factory;
 
     struct TokenBag {
         address[] tokenAddress;
     }
 
-    mapping(address => TokenBag) tokenList;
+    FactoryInfo private factory;
 
     constructor() {
         _tokenImplementation = address(new ERC721Preset());
