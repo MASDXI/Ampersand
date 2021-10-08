@@ -37,10 +37,6 @@ async function main() {
   console.log("ERC721.owner:", checkOwner);
   const checkName = await instanceERC721Preset.name();
   console.log("ERC721.name:", checkName);
-  const getFactory = await instanceERC721Preset.getFactory();
-  console.log("getFactory:", getFactory);
-  const getFactoryManger = await instanceERC721Preset.getFactoryManager();
-  console.log("getFactoryManger:", getFactoryManger);
   console.log(
     "totalSupply before mint",
     (await instanceERC721Preset.totalSupply()).toNumber()

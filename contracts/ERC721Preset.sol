@@ -170,15 +170,6 @@ contract ERC721Preset is
         _unpause();
     }
 
-    function getFactory() public view returns (address) {
-        return _factoryAddress;
-    }
-
-    function getFactoryManager() public view returns (address) {
-        IFactoryClone factory = IFactoryClone(getFactory());
-        return factory.feesAddress();
-    }
-
     function _beforeTokenTransfer(
         address from,
         address to,

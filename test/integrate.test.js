@@ -34,7 +34,7 @@ describe("FactoryClone test", function () {
     expect(result).to.equal(tokenInfo[0]);
   });
 
-  it("mintting 1 token", async function () {
+  it("minting 1 token", async function () {
     await token.mint(accounts[0].address);
     const result = await token.totalSupply();
     expect(result).to.equal(1);
