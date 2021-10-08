@@ -104,8 +104,9 @@ contract ERC721Preset is
         require(totalSupply() + amount <= maxSupply(), "19c7b6c43");
         require(amount <= maxPurchase(), "a4006875");
         require(msg.value >= (getPrice() * amount), "3e2087fb");
+        uint256 supply = totalSupply();
         for (uint256 i = 1; i <= amount; i++) {
-            _mint(msg.sender, totalSupply() + i);
+            _safeMint(msg.sender, supply + i);
         }
     }
 
@@ -147,14 +148,15 @@ contract ERC721Preset is
     function mint(address to) public virtual {
         require(hasRole(MINTER_ROLE, _msgSender()), "24113153");
         require(totalSupply() + 1 <= maxSupply(), "9c7b6c43");
-        _mint(to, totalSupply() + 1);
+        _safeMint(to, totalSupply() + 1);
     }
 
     function mintMulti(address to, uint256 amount) public {
         require(hasRole(MINTER_ROLE, _msgSender()), "24113153");
         require(totalSupply() + amount <= maxSupply(), "9c7b6c43");
+        uint256 supply = totalSupply();
         for (uint256 i = 1; i <= amount; i++) {
-            _mint(to, totalSupply() + i);
+            _safeMint(to, supply + i);
         }
     }
 
