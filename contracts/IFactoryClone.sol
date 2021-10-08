@@ -10,7 +10,7 @@ interface IFactoryClone {
         string name,
         string symbol,
         string baseTokenURI,
-        address indexed
+        address indexed _contract
     );
     event FeesAddressChanged(address indexed to);
     event FeesUpdated(uint256 amount);
