@@ -101,8 +101,8 @@ contract ERC721Preset is
         nonReentrant
         whenNotPaused
     {
-        require(totalSupply() + amount <= maxSupply(), "19c7b6c43");
         require(amount <= maxPurchase(), "a4006875");
+        require(totalSupply() + amount <= maxSupply(), "19c7b6c43");
         require(msg.value >= (getPrice() * amount), "3e2087fb");
         uint256 supply = totalSupply();
         for (uint256 i = 1; i <= amount; i++) {
