@@ -40,9 +40,9 @@ contract FactoryClone is Ownable, Pausable, IFactoryClone {
     FactoryInfo private factory;
 
     constructor() {
-        _tokenImplementation = address(new ERC721Preset());
-        factory._feesAddres = _msgSender();
         factory._fees = 0 ether;
+        factory._feesAddres = _msgSender();
+        _tokenImplementation = address(new ERC721Preset());
         // _fees = 0.001 ether // uncommment this line when `production`
         // _feeAddress = 0x<YOUR_ADDRESS>; // uncommment this line when `production`
         // _pause(); // uncommment this line when `production`
