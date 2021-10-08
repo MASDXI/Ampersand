@@ -52,11 +52,6 @@ describe("ERC721Preset test", function () {
     expect(result.toString()).to.equal("0");
   });
 
-  it("getFactory", async function () {
-    const result = await ERC721Preset.getFactory();
-    expect(result.toString()).to.equal(DEAFAULT_FACTORY_ADDRESS);
-  });
-
   it("getPrice", async function () {
     const result = await ERC721Preset.getPrice();
     expect(result.toString()).to.equal("0");
@@ -102,14 +97,9 @@ describe("ERC721Preset test", function () {
     await ERC721Preset.initialize(TOKEN, accounts[0].address);
     await ERC721Preset.buy(20, { value: hre.ethers.utils.parseEther("0.00000000000000002") });
     const array = [];
-    for (i = 0; i < 20; i++) {
-      array.push(await ERC721Preset.ownerOf(1));
-      expect(array[i]).to.equal(accounts[0].address);
+    for (i = 1; i <= 20; i++) {
+      array.push(await ERC721Preset.ownerOf(i));
+      expect(array[i-1]).to.equal(accounts[0].address);
     }
   });
-
-  //  it("getFactoryManager", async function() {
-  //     const result = await ERC721Preset.getFactoryManager();
-  //     expect(result.toString()).to.equal(accounts[0].address);
-  //   });
 });
