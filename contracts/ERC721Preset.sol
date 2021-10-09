@@ -145,6 +145,11 @@ contract ERC721Preset is
         return token._baseTokenURI;
     }
 
+    function setBaseTokenURI(string memory _baseTokenURI) public  {
+        require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "a4fb704b");
+        token._baseTokenURI = _baseTokenURI;
+    }
+
     function mint(address to) public virtual {
         require(hasRole(MINTER_ROLE, _msgSender()), "24113153");
         require(totalSupply() + 1 <= maxSupply(), "9c7b6c43");
