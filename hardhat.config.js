@@ -55,6 +55,22 @@ module.exports = {
       // gas: 5000000,
       // gasPrice: 70000000000, // 70 gwei
     },
+    bsctest: {
+      chainId: 97,
+      url: process.env.NETWORK_URL,
+      accounts:
+        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+      // gas: 5000000,
+      // gasPrice: 70000000000, // 70 gwei
+    },
+    mumbai: {
+      chainId: 80001,
+      url: process.env.NETWORK_URL,
+      accounts:
+        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+      // gas: 5000000,
+      // gasPrice: 70000000000, // 70 gwei
+    },
   },
   gasReporter: {
     enabled: process.env.REPORT_GAS !== undefined,
