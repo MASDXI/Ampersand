@@ -54,11 +54,16 @@ module.exports = {
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
+    mainnet: {
+      url: process.env.MAINNET_URL,
+      accounts:
+        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+    },
   },
   gasReporter: {
     enabled: process.env.REPORT_GAS,
     currency: "usd",
-    gasPrice: 50,
+    gasPrice: 70,
     coinmarketcap: process.env.COINMARKET_API_KEY,
   },
   etherscan: {

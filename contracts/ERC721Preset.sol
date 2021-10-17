@@ -91,7 +91,7 @@ contract ERC721Preset is
         _setupRole(DEFAULT_ADMIN_ROLE, owner);
         _setupRole(MINTER_ROLE, owner);
         _setupRole(PAUSER_ROLE, owner);
-        // _pause(); uncommment this line when `production`
+        // _pause(); // uncommment this line when `production`
     }
 
     function buy(uint256 amount)
