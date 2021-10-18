@@ -17,7 +17,7 @@ describe("FactoryClone test", function () {
     accounts = await ethers.getSigners();
     tokenInfo = [
       18,
-      hre.ethers.utils.parseEther("1000000000"),
+      hre.ethers.utils.parseEther("1000000000.0"),
       "basic coin",
       "bsc",
     ];
@@ -43,9 +43,18 @@ describe("FactoryClone test", function () {
     expect(result).to.equal(tokenInfo[2]);
   });
 
-  it("minting 1 token", async function () {
-    // await token.mint(accounts[0].address);
+  it("get token symbol", async function () {
+    const result = await token.symbol();
+    expect(result).to.equal(tokenInfo[3]);
+  });
+
+  it("get token decimals", async function () {
+    const result = await token.decimals();
+    expect(result).to.equal(tokenInfo[0]);
+  });
+
+  it("get totalSupply", async function () {
     const result = await token.totalSupply();
-    expect(result).to.equal(0);
+    expect(result.toString()).to.equal(tokenInfo[1].toString());
   });
 });

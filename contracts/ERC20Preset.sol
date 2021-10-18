@@ -99,6 +99,10 @@ contract ERC20Preset is
         return token._decimals;
     }
 
+    function totalSupply() public view virtual override returns (uint256) {
+        return token._totalSupply;
+    }
+
     function _beforeTokenTransfer(
         address from,
         address to,
