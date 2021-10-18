@@ -86,7 +86,7 @@ contract FactoryClone is Ownable, Pausable, IFactoryClone {
 
     function withdrawAll() public payable onlyOwner {
         require(address(this).balance > 0, "17854c4f");
-        payable(msg.sender).transfer(address(this).balance);
+        payable(_msgSender()).transfer(address(this).balance);
     }
 
     function fees() public view virtual override returns (uint256) {
