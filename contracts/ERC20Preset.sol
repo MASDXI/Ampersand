@@ -9,17 +9,16 @@ import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20Pausable
 import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20BurnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol";
 
-// import "./IFactoryClone.sol";
-
 //  .d8888b.
 // d88P  "88b
 // Y88b. d88P
 //  "Y8888P"
-// .d88P88K.dNFT
+// .d88P88K.d8FT
 // 888"  Y888P"
 // Y88b .d8888b
 //  "Y8888P" Y88b
 // ａｍｐｅｒｓａｎｄ
+
 contract ERC20Preset is
     Initializable,
     ContextUpgradeable,
@@ -32,7 +31,7 @@ contract ERC20Preset is
         virtual
         initializer
     {
-        __ERC20PresetMinterPauser_init(name, symbol);
+        __ERC20PresetMinterPauser_init(input, owner);
     }
 
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
@@ -48,27 +47,28 @@ contract ERC20Preset is
     tokenInfo private token;
 
     function __ERC20PresetMinterPauser_init(
-        string memory name,
-        string memory symbol
+        tokenInfo memory input,
+        address owner
     ) internal initializer {
         __Context_init_unchained();
         __ERC165_init_unchained();
         __AccessControl_init_unchained();
         __AccessControlEnumerable_init_unchained();
-        __ERC20_init_unchained(name, symbol);
+        __ERC20_init_unchained(input._name, input._symbol);
         __ERC20Burnable_init_unchained();
         __Pausable_init_unchained();
         __ERC20Pausable_init_unchained();
-        __ERC20PresetMinterPauser_init_unchained(name, symbol);
+        __ERC20PresetMinterPauser_init_unchained(input, owner);
     }
 
     function __ERC20PresetMinterPauser_init_unchained(
-        string memory name,
-        string memory symbol
+        tokenInfo memory input,
+        address owner
     ) internal initializer {
-        _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
-        _setupRole(MINTER_ROLE, _msgSender());
-        _setupRole(PAUSER_ROLE, _msgSender());
+        token = input;
+        _setupRole(DEFAULT_ADMIN_ROLE, owner);
+        _setupRole(MINTER_ROLE, owner);
+        _setupRole(PAUSER_ROLE, owner);
     }
 
     function mint(address to, uint256 amount) public virtual {

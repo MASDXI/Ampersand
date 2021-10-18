@@ -11,7 +11,7 @@ import "./ERC20Preset.sol";
 // d88P  "88b
 // Y88b. d88P
 //  "Y8888P"
-// .d88P88K.dNFT
+// .d88P88K.d8FT
 // 888"  Y888P"
 // Y88b .d8888b
 //  "Y8888P" Y88b
@@ -21,8 +21,6 @@ contract FactoryClone is Ownable, Pausable, IFactoryClone {
     /**
      * ERROR code handle
      * CRC32 encode
-     * 736d4bef FactoryClone: price not correct
-     * 17854c4f ERC20Preset: require eth more than 0
      */
     mapping(address => TokenBag) tokenList;
     address immutable _tokenImplementation;
