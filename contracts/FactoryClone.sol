@@ -22,7 +22,7 @@ contract FactoryClone is Ownable, Pausable, IFactoryClone {
      * ERROR code handle
      * CRC32 encode
      * 736d4bef FactoryClone: price not correct
-     * 17854c4f ERC721Preset: require eth more than 0
+     * 17854c4f ERC20Preset: require eth more than 0
      */
     mapping(address => TokenBag) tokenList;
     address immutable _tokenImplementation;
@@ -56,11 +56,12 @@ contract FactoryClone is Ownable, Pausable, IFactoryClone {
     {
         require(msg.value >= createPrice(), "736d4bef");
         address clone = Clones.clone(_tokenImplementation);
-        ERC721Preset(clone).initialize(token, _msgSender());
+        ERC20Preset(clone).initialize(token, _msgSender());
         emit TokenCreated(
+            token._decimals,
+            token._totalSupply,
             token._name,
             token._symbol,
-            token._baseTokenURI,
             address(clone)
         );
         tokenList[_msgSender()].tokenAddress.push(address(clone));
@@ -86,25 +87,7 @@ contract FactoryClone is Ownable, Pausable, IFactoryClone {
 
     function withdrawAll() public payable onlyOwner {
         require(address(this).balance > 0, "17854c4f");
-        payable(msg.sender).transfer(address(this).balance);
-    }
-
-    function fees() public view virtual override returns (uint256) {
-        return factory._fees;
-    }
-
-    function setFees(uint256 price) public onlyOwner {
-        factory._fees = price;
-        emit FeesUpdated(price);
-    }
-
-    function feesAddress() public view virtual override returns (address) {
-        return factory._feesAddres;
-    }
-
-    function setFeesAddress(address to) public onlyOwner {
-        factory._feesAddres = to;
-        emit FeesAddressChanged(to);
+        payable(_msgSender()).transfer(address(this).balance);
     }
 
     function createPrice() public view returns (uint256) {
