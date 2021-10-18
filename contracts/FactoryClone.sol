@@ -27,24 +27,16 @@ contract FactoryClone is Ownable, Pausable, IFactoryClone {
     mapping(address => TokenBag) tokenList;
     address immutable _tokenImplementation;
 
-    struct FactoryInfo {
-        uint256 _fees;
-        uint256 _createPrice;
-        address _feesAddres;
-    }
+    uint256 private _createPrice;
 
     struct TokenBag {
         address[] tokenAddress;
     }
 
-    FactoryInfo private factory;
-
     constructor() {
-        factory._fees = 0;
-        factory._feesAddres = _msgSender();
+        _createPrice = 0;
         _tokenImplementation = address(new ERC20Preset());
-        // factory._fees = 10 // uncommment this line when `production`
-        // factory._feesAddres = 0x<YOUR_ADDRESS>; // uncommment this line when `production`
+        // factory._createPrice = 10 // uncommment this line when `production`
         // _pause(); // uncommment this line when `production`
     }
 
@@ -91,11 +83,11 @@ contract FactoryClone is Ownable, Pausable, IFactoryClone {
     }
 
     function createPrice() public view returns (uint256) {
-        return factory._createPrice;
+        return _createPrice;
     }
 
     function setCreatePrice(uint256 price) public onlyOwner {
-        factory._createPrice = price;
+        _createPrice = price;
         emit createPriceUpdated(price);
     }
 }

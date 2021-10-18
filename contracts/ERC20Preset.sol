@@ -4,11 +4,12 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts-upgradeable/access/AccessControlEnumerableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
-import "@openzeppelin/contracts-upgradeable/token/ERC20/ERC721Upgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC721PausableUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC721EnumerableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20PausableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20BurnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol";
-import "./IFactoryClone.sol";
+
+// import "./IFactoryClone.sol";
 
 //  .d8888b.
 // d88P  "88b
@@ -19,31 +20,19 @@ import "./IFactoryClone.sol";
 // Y88b .d8888b
 //  "Y8888P" Y88b
 // ａｍｐｅｒｓａｎｄ
-
-contract ERC721Preset is
+contract ERC20Preset is
     Initializable,
     ContextUpgradeable,
     AccessControlEnumerableUpgradeable,
-    ERC721Upgradeable,
-    ERC721EnumerableUpgradeable,
-    ERC721PausableUpgradeable,
+    ERC20BurnableUpgradeable,
+    ERC20PausableUpgradeable
 {
-    /**
-     * ERROR code handle
-     * CRC32 encode
-     * a4fb704b ERC20Preset: require 'DEFAULT_ADMIN_ROLE' role
-     * 24113153 ERC20Preset: require 'MINTER_ROLE' role
-     * 500c80ca ERC20Preset: require 'PAUSER_ROLE' role
-     * ERC20Preset: burn function require '' token type
-     * ERC20Preset: mint function require '' token type
-     */
-
     function initialize(tokenInfo memory input, address owner)
         public
         virtual
         initializer
     {
-        __ERC721PresetMinterPauserAutoId_init(input, owner);
+        __ERC20PresetMinterPauser_init(name, symbol);
     }
 
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
@@ -56,53 +45,67 @@ contract ERC721Preset is
         string _symbol;
     }
 
-    address private _factoryAddress;
     tokenInfo private token;
 
-    function __ERC721PresetMinterPauserAutoId_init(
-        tokenInfo memory input,
-        address owner
+    function __ERC20PresetMinterPauser_init(
+        string memory name,
+        string memory symbol
     ) internal initializer {
         __Context_init_unchained();
         __ERC165_init_unchained();
         __AccessControl_init_unchained();
         __AccessControlEnumerable_init_unchained();
-        __ReentrancyGuard_init_unchained();
-        __ERC721_init_unchained(input._name, input._symbol);
-        __ERC721Enumerable_init_unchained();
+        __ERC20_init_unchained(name, symbol);
+        __ERC20Burnable_init_unchained();
         __Pausable_init_unchained();
-        __ERC721Pausable_init_unchained();
-        __ERC721PresetMinterPauserAutoId_init_unchained(input, owner);
+        __ERC20Pausable_init_unchained();
+        __ERC20PresetMinterPauser_init_unchained(name, symbol);
     }
 
-    function __ERC721PresetMinterPauserAutoId_init_unchained(
-        tokenInfo memory input,
-        address owner
+    function __ERC20PresetMinterPauser_init_unchained(
+        string memory name,
+        string memory symbol
     ) internal initializer {
-        token = input;
-        _factoryAddress = _msgSender();
-        _setupRole(DEFAULT_ADMIN_ROLE, owner);
-        _setupRole(MINTER_ROLE, owner);
-        _setupRole(PAUSER_ROLE, owner);
-        // _pause(); // uncommment this line when `production`
+        _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
+        _setupRole(MINTER_ROLE, _msgSender());
+        _setupRole(PAUSER_ROLE, _msgSender());
+    }
+
+    function mint(address to, uint256 amount) public virtual {
+        require(
+            hasRole(MINTER_ROLE, _msgSender()),
+            "ERC20PresetMinterPauser: must have minter role to mint"
+        );
+        _mint(to, amount);
+    }
+
+    function pause() public virtual {
+        require(
+            hasRole(PAUSER_ROLE, _msgSender()),
+            "ERC20PresetMinterPauser: must have pauser role to pause"
+        );
+        _pause();
+    }
+
+    function unpause() public virtual {
+        require(
+            hasRole(PAUSER_ROLE, _msgSender()),
+            "ERC20PresetMinterPauser: must have pauser role to unpause"
+        );
+        _unpause();
     }
 
     function decimals() public view virtual override returns (uint8) {
         return token._decimals;
     }
 
-    function mint(address to) public virtual {
-        require(hasRole(MINTER_ROLE, _msgSender()), "24113153");
-        _safeMint(to, totalSupply() + 1);
+    function _beforeTokenTransfer(
+        address from,
+        address to,
+        uint256 amount
+    ) internal virtual override(ERC20Upgradeable, ERC20PausableUpgradeable) {
+        super._beforeTokenTransfer(from, to, amount);
     }
 
-    function pause() public virtual {
-        require(hasRole(PAUSER_ROLE, _msgSender()), "500c80ca");
-        _pause();
-    }
-
-    function unpause() public virtual {
-        require(hasRole(PAUSER_ROLE, _msgSender()), "500c80ca");
-        _unpause();
-    }
+    uint256[50] private __gap;
 }
