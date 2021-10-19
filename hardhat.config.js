@@ -5,27 +5,6 @@ require("hardhat-gas-reporter");
 require("solidity-coverage");
 require("./task/account.js");
 
-// This is a sample Hardhat task. To learn how to create your own go to
-// https://hardhat.org/guides/create-task.html
-task("accounts", "Prints the list of accounts", async () => {
-  // eslint-disable-next-line no-undef
-  const accounts = await ethers.getSigners();
-
-  for (const account of accounts) {
-    console.log("address :", account.address);
-  }
-});
-
-task("test-com", "Prints the list of accounts", async () => {
-  const hre = require("hardhat");
-  await hre.run("compile");
-});
-// You need to export an object to set up your config
-// Go to https://hardhat.org/config/ to learn more
-
-/**
- * @type import('hardhat/config').HardhatUserConfig
- */
 module.exports = {
   solidity: {
     compilers: [
