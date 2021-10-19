@@ -7,8 +7,3 @@ task("accounts", "Prints the list of accounts", async () => {
     console.log("address :", account.address);
   }
 });
-
-task("test-com", "Prints the list of accounts", async () => {
-  const hre = require("hardhat");
-  await hre.run("compile");
-});

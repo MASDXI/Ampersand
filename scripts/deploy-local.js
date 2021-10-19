@@ -1,5 +1,5 @@
 const hre = require("hardhat");
-const ethers = require("ethers");
+const fs = require('fs');
 
 async function main() {
 
@@ -8,14 +8,13 @@ async function main() {
   await FactoryClone.deployed();
   // return contract address
   console.log("Factory Clone deployed to:", FactoryClone.address);
-  // create token
-  const mockToken = [18,ethers.utils.parseEther("100000000"),"basic coin","bsc"];
-  const createToken = await tokenFactory.createToken(mockToken);
-  const receipt = await createToken.wait();
-  const output = receipt.events.filter(({ event }) => event === "TokenCreated");
-  const address = output[0].args.tokenAddress;
-  console.log("ERC20 deployed to:", address);
-  // testing token
+  // write address to file
+  let obj = `{\n\  "FactoryAddress\": "${FactoryClone.address}"\n}`
+  try {
+    const data = fs.writeFileSync('artifacts/deployed.json', obj)
+    } catch (err) {
+      console.error(err)
+  }
 }
 
 main()
