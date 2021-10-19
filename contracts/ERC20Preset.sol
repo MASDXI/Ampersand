@@ -26,6 +26,10 @@ contract ERC20Preset is
     ERC20BurnableUpgradeable,
     ERC20PausableUpgradeable
 {
+    /**
+     * ERROR code handle
+     * CRC32 encode
+     */
     function initialize(tokenInfo memory input, address owner)
         public
         virtual
