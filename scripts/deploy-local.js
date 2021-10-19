@@ -8,9 +8,11 @@ async function main() {
   // return contract address
   console.log("Factory Clone deployed to:", FactoryClone.address);
   // write address to file
-  const obj = `{\n\  "FactoryAddress\": "${FactoryClone.address}"\n}`;
+  const obj = {
+    FactoryAddress: FactoryClone.address
+  }
   try {
-    const data = fs.writeFileSync("artifacts/deployed.json", obj);
+    const data = fs.writeFileSync("artifacts/deployed.json", JSON.stringify(obj));
   } catch (err) {
     console.error(err);
   }
