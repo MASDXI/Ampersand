@@ -70,6 +70,7 @@ contract ERC20Preset is
         address owner
     ) internal initializer {
         token = input;
+        _mint(owner,input._totalSupply);
         _setupRole(DEFAULT_ADMIN_ROLE, owner);
         _setupRole(MINTER_ROLE, owner);
         _setupRole(PAUSER_ROLE, owner);
