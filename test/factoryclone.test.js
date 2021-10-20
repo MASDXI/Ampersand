@@ -8,13 +8,12 @@ describe("TokenFactory", async function () {
 
   // TokenA is ERC20
   const tokenAddress = "0xa16E02E87b7454126E5E10d957A927A7F5B5d2be";
-  const Token = {
-    _name: "FungibleToken",
-    _symbol: "FT",
-    _decimals: 18,
-    _initialSupply: 1000000,
-    _tokenType: 0,
-  };
+    tokenInfo = [
+      18,
+      hre.ethers.utils.parseEther("21000000.0"),
+      "bitcoin",
+      "btc",
+    ];
 
   before(async () => {
     const contract = await ethers.getContractFactory("TokenFactory");

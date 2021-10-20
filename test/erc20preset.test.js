@@ -17,7 +17,12 @@ describe("ERC20Preset test", function () {
     const contract = await ethers.getContractFactory("ERC20Preset");
     ERC20Preset = await contract.deploy();
     accounts = await ethers.getSigners();
-    TOKEN = [18, hre.ethers.utils.parseEther("1000"), "aaa", "aaa"];
+    TOKEN = [
+      18,
+      hre.ethers.utils.parseEther("21000000.0"),
+      "bitcoin",
+      "btc",
+    ];
     await ERC20Preset.deployed();
   });
 
