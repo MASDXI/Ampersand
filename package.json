@@ -26,7 +26,9 @@
     "solhint:fix": "npx solhint 'contracts/**/*.sol' --fix"
   },
   "dependencies": {
-    "@openzeppelin/contracts": "^4.3.1"
+    "@openzeppelin/contracts": "^4.3.1",
+    "@openzeppelin/contracts-upgradeable": "^4.3.2",
+    "hardhat-change-network": "^0.0.7"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.0",
