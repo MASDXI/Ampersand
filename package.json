@@ -16,7 +16,7 @@
     "deploy:rinkeby": "npx hardhat run scripts/deploy-testnet.js --network rinkeby",
     "deploy:mainnet": "npx hardhat run scripts/deploy-mainnet.js --network mainnet",
     "verify:ropsten": "npx hardhat verify --network ropsten",
-    "verify:rinkeby": "npx hardhat verify --network rinkeby",
+    "verify:rinkeby": "npx hardhat verify:rinkeby",
     "verify:mainnet": "npx hardhat verify --network mainnet",
     "eslint": "npx eslint '**/*.js'",
     "eslint:fix": "npx eslint '**/*.js' --fix",
