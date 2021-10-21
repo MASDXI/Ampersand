@@ -7,12 +7,14 @@ async function main() {
   await FactoryClone.deployed();
   // return contract address
   console.log("Factory Clone deployed to:", FactoryClone.address);
+  console.log("ERC20Preset deployed to:", await FactoryClone.getImplemetation());
   // write address to file
   const obj = {
-    FactoryAddress: FactoryClone.address
+    FactoryAddress: FactoryClone.address,
+    ERC20PresetAddress: await FactoryClone.getImplemetation()
   }
   try {
-    const data = fs.writeFileSync("artifacts/deployed.json", JSON.stringify(obj));
+    const data = fs.writeFileSync("artifacts/deployed.json", JSON.stringify(obj, null, 2));
   } catch (err) {
     console.error(err);
   }

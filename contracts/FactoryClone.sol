@@ -57,6 +57,10 @@ contract FactoryClone is Ownable, Pausable, IFactoryClone {
         tokenList[_msgSender()].tokenAddress.push(address(clone));
         return address(clone);
     }
+    
+    function getImplemetation() public view returns (address) {
+        return _tokenImplementation;
+    }
 
     function getTokenAddress(address _address)
         public
