@@ -4,6 +4,8 @@ require("hardhat-change-network");
 
 task("verify:rinkeby", "Verifies contract on Etherscan Rinkeby", async () => {
     const contract = require("../artifacts/deployed.json");
+    // adding changeNetwork form args input
+    // hre.changeNetwork(`${NETWORKS}`);
     hre.changeNetwork('rinkeby');
     await hre.run(`verify`,{
         address: contract.FactoryAddress,
