@@ -40,7 +40,7 @@ contract ERC721Preset is
      * a4006875 ERC721Preset: exceeds maximum purchase per tx
      * 3e2087fb ERC721Preset: price not correct
      * afa07ab7 ERC721Preset: require eth more than 10000 gwei
-     */
+     */    
 
     function initialize(tokenInfo memory input, address owner)
         public
@@ -50,8 +50,16 @@ contract ERC721Preset is
         __ERC721PresetMinterPauserAutoId_init(input, owner);
     }
 
+    event withdrawal(address indexed account ,uint256 amount);
+    event baseTokenURIChanged(string uri);
+    event priceChanged(uint256 price);
+    event buy(address indexed account, uint256 amount);
+
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
     bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
+    address private immutable factoryAddress;
+    tokenInfo private token;
+    uint256[48] private __gap;
 
     struct tokenInfo {
         string _name;
@@ -63,8 +71,14 @@ contract ERC721Preset is
         address[] _collaborator;
     }
 
-    address private _factoryAddress;
-    tokenInfo private token;
+    modifier checkChange(uint256 value, uint256 amount) {
+        require(value >= calculatePrice(amount),"3e2087fb");
+        _;
+        if (value > calculatePrice) {
+            uint256 changeAmount = value - calculatePrice;
+            payable(_msgSender()).transfer(changeAmount);
+        }
+    }
 
     function __ERC721PresetMinterPauserAutoId_init(
         tokenInfo memory input,
@@ -94,87 +108,6 @@ contract ERC721Preset is
         // _pause(); // uncommment this line when `production`
     }
 
-    function buy(uint256 amount)
-        public
-        payable
-        virtual
-        nonReentrant
-        whenNotPaused
-    {
-        require(amount <= maxPurchase(), "a4006875");
-        require(totalSupply() + amount <= maxSupply(), "19c7b6c43");
-        require(msg.value >= (getPrice() * amount), "3e2087fb");
-        uint256 supply = totalSupply();
-        for (uint256 i = 1; i <= amount; i++) {
-            _safeMint(msg.sender, supply + i);
-        }
-    }
-
-    function maxSupply() public view returns (uint256) {
-        return token._maxSupply;
-    }
-
-    function maxPurchase() public view returns (uint256) {
-        return token._maxPurchase;
-    }
-
-    function setPrice(uint256 newPrice) public {
-        require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "a4fb704b");
-        token._price = newPrice;
-    }
-
-    function getPrice() public view returns (uint256) {
-        return token._price;
-    }
-
-    function withdraw() public payable {
-        require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "a4fb704b");
-        // require(address(this).balance > 10000 gwei, "afa07ab7"); // uncomment this line when `production`
-        IFactoryClone factory = IFactoryClone(_factoryAddress);
-        uint256 each = ((address(this).balance *
-            ((100 - factory.fees()) / 100)) / token._collaborator.length);
-
-        for (uint256 i = 0; i < token._collaborator.length; i++) {
-            payable(token._collaborator[i]).transfer(each);
-        }
-
-        payable(factory.feesAddress()).transfer(address(this).balance);
-    }
-
-    function _baseURI() internal view virtual override returns (string memory) {
-        return token._baseTokenURI;
-    }
-
-    function setBaseTokenURI(string memory _baseTokenURI) public  {
-        require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "a4fb704b");
-        token._baseTokenURI = _baseTokenURI;
-    }
-
-    function mint(address to) public virtual {
-        require(hasRole(MINTER_ROLE, _msgSender()), "24113153");
-        require(totalSupply() + 1 <= maxSupply(), "9c7b6c43");
-        _safeMint(to, totalSupply() + 1);
-    }
-
-    function mintMulti(address to, uint256 amount) public {
-        require(hasRole(MINTER_ROLE, _msgSender()), "24113153");
-        require(totalSupply() + amount <= maxSupply(), "9c7b6c43");
-        uint256 supply = totalSupply();
-        for (uint256 i = 1; i <= amount; i++) {
-            _safeMint(to, supply + i);
-        }
-    }
-
-    function pause() public virtual {
-        require(hasRole(PAUSER_ROLE, _msgSender()), "500c80ca");
-        _pause();
-    }
-
-    function unpause() public virtual {
-        require(hasRole(PAUSER_ROLE, _msgSender()), "500c80ca");
-        _unpause();
-    }
-
     function _beforeTokenTransfer(
         address from,
         address to,
@@ -191,6 +124,84 @@ contract ERC721Preset is
         super._beforeTokenTransfer(from, to, tokenId);
     }
 
+    function _baseURI() internal view virtual override returns (string memory) {
+        return token._baseTokenURI;
+    }
+
+    function calculatePrice(uint256 value) internal view returns (uint256) {
+        return getPrice() * amount;
+    }
+
+    function buy(uint256 amount)
+        external
+        payable
+        virtual
+        nonReentrant
+        whenNotPaused
+        checkChange(msg.value, amount)
+    {
+        require(amount <= maxPurchase(), "a4006875");
+        require(totalSupply() + amount <= maxSupply(), "19c7b6c43");
+        uint256 supply = totalSupply();
+        for (uint256 i = 1; i <= amount; i++) {
+            _safeMint( _msgSender(), supply + i);
+        }
+        emit buy( _msgSender(), amount);
+    }
+
+    function setPrice(uint256 newPrice) external {
+        require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "a4fb704b");
+        token._price = newPrice;
+        emit priceChanged(newPrice);
+    }
+
+    function withdraw() external payable {
+        require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "a4fb704b");
+        // require(address(this).balance > 10000 gwei, "afa07ab7"); // uncomment this line when `production`
+        IFactoryClone factory = IFactoryClone(_factoryAddress);
+        uint256 each = ((address(this).balance *
+            ((100 - factory.fees()) / 100)) / token._collaborator.length);
+        for (uint256 i = 0; i < token._collaborator.length; i++) {
+            payable(token._collaborator[i]).transfer(each);
+            emit withdrawal(token._collaborator[i], each);
+        }
+
+        payable(factory.feesAddress()).transfer(address(this).balance);
+        emit withdrawal(factory.feesAddress(),address(this).balance);
+    }
+
+    function setBaseTokenURI(string memory _baseTokenURI) external  {
+        require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "a4fb704b");
+        token._baseTokenURI = _baseTokenURI;
+        emit baseTokenURIChanged(_baseTokenURI);
+    }
+
+    function mint(address to) external virtual {
+        uint256 supply = totalSupply();
+        require(hasRole(MINTER_ROLE, _msgSender()), "24113153");
+        require(supply + 1 <= maxSupply(), "9c7b6c43");
+        _safeMint(to, supply + 1);
+    }
+
+    function mintMulti(address to, uint256 amount) external {
+        uint256 supply = totalSupply();
+        require(hasRole(MINTER_ROLE, _msgSender()), "24113153");
+        require(supply + amount <= maxSupply(), "9c7b6c43");
+        for (uint256 i = 1; i <= amount; i++) {
+            _safeMint(to, supply + i);
+        }
+    }
+
+    function pause() external virtual {
+        require(hasRole(PAUSER_ROLE, _msgSender()), "500c80ca");
+        _pause();
+    }
+
+    function unpause() external virtual {
+        require(hasRole(PAUSER_ROLE, _msgSender()), "500c80ca");
+        _unpause();
+    }
+
     function supportsInterface(bytes4 interfaceId)
         public
         view
@@ -205,5 +216,16 @@ contract ERC721Preset is
         return super.supportsInterface(interfaceId);
     }
 
-    uint256[48] private __gap;
+    function maxSupply() public view returns (uint256) {
+        return token._maxSupply;
+    }
+
+    function maxPurchase() public view returns (uint256) {
+        return token._maxPurchase;
+    }
+
+    function getPrice() public view returns (uint256) {
+        return token._price;
+    }
+
 }
